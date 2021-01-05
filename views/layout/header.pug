@@ -1,0 +1,33 @@
+header
+    div(class="all")
+        div(class="title-logo")
+            h1 CER
+        div(class="navbar")
+            div(class="wp-search")
+                button(class="button-search") 
+                    if name === 'registro'
+                        img(src="../../../icons/loupe.svg", alt="")
+                    else
+                        img(src="icons/loupe.svg", alt="")
+                input(type="search" placeholder="Buscar Maestro")
+            div(class="wp-nav")
+                nav
+                    a(href="#" class="link") Articulos
+                    a(href="#" class="link") Blog
+                    a(href="#" class="link btn-primary") Ingresar
+        div(class="phone-hamburger")
+                if name === 'registro'
+                    img(src="../../../icons/menu.svg",id="hbr" alt="")
+                else
+                    img(src="icons/menu.svg",id="hbr" alt="")
+    div(class="phone-menu" id="phone")
+        div(class="wp-search")
+                button(class="button-search") 
+                    if name === 'registro'
+                        img(src="../../../icons/loupe.svg", alt="")
+                    else
+                        img(src="icons/loupe.svg", alt="")
+                input(type="search" placeholder="Buscar Maestro")
+        a(href="#" class="link") Articulos
+        a(href="#" class="link") Blog
+        a(href="#" class="link btn-primary") Ingresar

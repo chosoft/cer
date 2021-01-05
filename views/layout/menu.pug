@@ -1,0 +1,28 @@
+section(class="left-menu")
+    div(class="menu-top")
+        a(href="/dash")
+            img(class="top-img", src="/icons/home.svg")
+    div(class="profile-data")
+        div(class="img-put")
+            img(src=`/${perfilData[2]}`, alt="perfil-img")
+        div(class="user-put")
+            h2= perfilData[0]
+        div(class="cargo-put")
+            span= perfilData[1]
+    div(class="menu-wp")
+        nav
+            a(href="/dash")
+                img(src="/icons/home.svg", alt="") 
+                p Inicio
+            a(href="#")
+                img(src="/icons/user.svg", alt="") 
+                p Perfil
+            a(href="#")
+                img(src="/icons/titulo.svg", alt="") 
+                p Articulos
+            a(href="/documentos")
+                img(src="/icons/doc.svg", alt="") 
+                p Documentos
+            a(href="/users/logout" id="lg")  
+                img(src="/icons/logout.svg", alt="") 
+                p Salir

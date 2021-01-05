@@ -1,0 +1,19 @@
+main
+        form
+            div(class="wp-img")
+                img(src="../../../icons/clipboard.svg")
+            div(class="wp-inputs")
+                input(type="mail" placeholder="Correo" id="correo" class="input")
+                input(type="text" class="input" id="username" placeholder="Nombre de usuario")
+                div(class="wp-pass")
+                    input(type="password" id="pass1" class="input pass" placeholder="Contraseña")
+                    button(class="toggle" toggle="pass1")
+                        img(src="../../../icons/eye(1).svg", alt="eye" class="view" id="p1")
+                        img(src="../../../icons/hide.svg", alt="eye" class="hide" id="p2")
+                div(class="wp-pass")
+                    input(type="password" id="pass2" class="input pass" placeholder="Contraseña(Confirmacion)")
+                    button(class="toggle" toggle="pass2")
+                        img(src="../../../icons/eye(1).svg", alt="eye" class="view" id="p3")
+                        img(src="../../../icons/hide.svg", alt="eye" class="hide" id ="p4")
+                button(type="submit" class="btn" id="regist") Registrarse
+                

@@ -1,0 +1,369 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  color: #191919;
+}
+
+header {
+  background: #133786;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+header .all {
+  width: 100%;
+  height: auto;
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+header .all .title-logo {
+  width: auto;
+  height: auto;
+}
+header .all .title-logo h1 {
+  text-align: left;
+  color: #FFF;
+  font-family: "Oxygen", sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+header .all .navbar {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+header .all .navbar .wp-search {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 20px;
+}
+header .all .navbar .wp-search .button-search {
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  padding-bottom: 3px;
+  background: #fff;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+header .all .navbar .wp-search .button-search img {
+  width: 20px;
+}
+header .all .navbar .wp-search input[type=search] {
+  padding: 5px;
+  color: #191919;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+header .all .navbar .wp-nav {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+header .all .navbar .wp-nav nav {
+  width: 100%;
+  height: auto;
+}
+header .all .navbar .wp-nav nav .link {
+  color: #fff;
+  padding: 12px 15px;
+  font-family: "Oxygen", sans-serif;
+  font-weight: 300;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+header .all .navbar .wp-nav nav .link:hover {
+  font-size: 20px;
+  color: #FED83F;
+}
+header .all .navbar .wp-nav nav .btn-primary {
+  background: #FED83F;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 12px;
+}
+header .all .navbar .wp-nav nav .btn-primary:hover {
+  font-size: 20px;
+  color: #fff;
+}
+header .all .phone-hamburger {
+  display: none;
+}
+header .phone-menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 50px;
+  padding-top: 40px;
+}
+main form {
+  width: 30%;
+  height: auto;
+}
+main form .wp-img {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+main form .wp-img img {
+  width: 60%;
+}
+main form .wp-inputs {
+  width: 100%;
+  height: auto;
+  padding: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+main form .wp-inputs .input {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  color: #191919;
+  font-size: 19px;
+  font-family: "Lato", sans-serif;
+  margin-bottom: 20px;
+}
+main form .wp-inputs .pass {
+  width: 85%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+main form .wp-inputs .wp-pass {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+main form .wp-inputs .wp-pass button {
+  margin-top: -20px;
+  padding: 10px 0;
+  padding-bottom: 10px;
+  padding-top: 14px;
+  width: 15%;
+  border: none;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+main form .wp-inputs .wp-pass button img {
+  width: 30px;
+}
+main form .wp-inputs .wp-pass button .hide {
+  display: none;
+}
+main form .wp-inputs .btn {
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-family: "Oxygen", sans-serif;
+  font-weight: bold;
+  background: #FED83F;
+  text-align: center;
+  font-size: 19px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+main form .wp-inputs .btn:hover {
+  transform: scale(1.1);
+}
+main .fm {
+  margin: auto;
+}
+
+@media screen and (max-width: 1600px) {
+  main {
+    padding: 30px;
+  }
+  main form {
+    width: 40%;
+  }
+  main form .wp-inputs {
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  main {
+    padding: 30px;
+  }
+  main form {
+    width: 50%;
+  }
+  main form .wp-inputs {
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 700px) {
+  header .all .navbar {
+    display: none;
+  }
+  header .all .phone-hamburger {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  header .all .phone-hamburger img {
+    width: 25px;
+  }
+  header .phone-menu {
+    display: none;
+    padding-bottom: 10px;
+    width: 50%;
+  }
+  header .phone-menu .wp-search {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  header .phone-menu .wp-search .button-search {
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+    padding-bottom: 3px;
+    background: #fff;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  header .phone-menu .wp-search .button-search img {
+    width: 20px;
+  }
+  header .phone-menu .wp-search input[type=search] {
+    padding: 5px;
+    color: #191919;
+    font-family: "Lato", sans-serif;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  header .phone-menu .link {
+    color: #fff;
+    width: 100%;
+    padding: 12px 15px;
+    font-family: "Oxygen", sans-serif;
+    font-weight: 300;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  header .phone-menu .btn-primary {
+    background: #FED83F;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 12px;
+  }
+
+  main {
+    padding: 30px;
+  }
+  main form {
+    width: 80%;
+  }
+  main form .wp-inputs {
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 600px) {
+  main {
+    padding: 30px;
+  }
+  main form {
+    width: 80%;
+  }
+  main form .wp-inputs {
+    padding: 30px;
+  }
+}
+@media screen and (max-width: 530px) {
+  header .phone-menu {
+    width: 70%;
+  }
+
+  main form {
+    width: 100%;
+  }
+  main form .wp-inputs {
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  main {
+    padding: 0px;
+  }
+  main form {
+    width: 80%;
+  }
+  main form .wp-inputs {
+    padding: 10px;
+  }
+}
+@media screen and (max-width: 400px) {
+  main {
+    padding: 0px;
+  }
+  main form {
+    width: 100%;
+  }
+  main form .wp-inputs {
+    padding: 10px;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */

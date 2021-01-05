@@ -1,0 +1,37 @@
+doctypehtml
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        link(href="https://fonts.googleapis.com/css2?family=Lato&family=Oxygen:wght@400;700&display=swap" rel="stylesheet" type="text/css") 
+        link(rel="stylesheet", href="/css/dash.css" type="text/css")
+    body
+
+        main(class="wp-division")
+            include layout/menu.pug
+            section(class="wp-30")
+            section(class="wp-content")
+                div(class="title-wp")
+                    h1 Documentos
+                div(class="leaf")
+                    if articulos === 'null'
+                        include null/docs.pug
+                    else
+                        div(class="wp-filesUpload")
+                            each grupo in grupos
+                                div(class="wp-section")
+                                    .wp-titleGroup
+                                        h1= grupo.name
+                                    .wp-linkTo
+                                        a(href=`/documentos?g=${grupo.url}`) Ir ahora
+
+        
+            
+        section(class="loaderUpFile")
+            div(class="wp-charger")
+            
+        script(src="/js/axios.min.js" type="text/javascript")
+        script(src="/js/sweetalert2.js" type="text/javascript")
+        script(src="/js/jquery.min.js" type="text/javascript")
+        script(src="/js/dash.js" type="text/javascript")

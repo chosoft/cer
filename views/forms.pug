@@ -1,0 +1,42 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        if name === 'registro'
+            meta(property="og:title" content="Registrate")
+            meta(property='og:type' content='article')
+            meta(property='og:title' content='TITLE OF YOUR POST OR PAGE')
+            meta(property='og:description' content='DESCRIPTION OF PAGE CONTENT')
+            meta(property='og:image' content='LINK TO THE IMAGE FILE')
+            meta(property='og:url' content='PERMALINK')
+            meta(property='og:site_name' content='SITE NAME')
+            meta(name="description", content="Formulario de Registro del Blog CER del Colegio Americano de Cali")
+        else
+            meta(name="description", content="Formulario de Inicio de Sesion del Blog CER del Colegio Americano de Cali")
+            meta(property='og:type' content='article')
+            meta(property='og:title' content='TITLE OF YOUR POST OR PAGE')
+            meta(property='og:description' content='DESCRIPTION OF PAGE CONTENT')
+            meta(property='og:image' content='LINK TO THE IMAGE FILE')
+            meta(property='og:url' content='PERMALINK')
+            meta(property='og:site_name' content='SITE NAME')
+
+        title= name
+        link(rel="shortcut icon", href="/icons/favicon.png", type="image/x-icon")
+        link(href="https://fonts.googleapis.com/css2?family=Lato&family=Oxygen:wght@400;700&display=swap" rel="stylesheet") 
+        link(href="/css/index.css" rel="stylesheet") 
+
+    body
+        include layout/header.pug
+
+        if name === 'login'
+            include needs/login.pug
+        else
+            include needs/register.pug
+
+        script(src="/js/axios.min.js")
+        script(src="/js/sweetalert2.js")
+        script(src="/js/jquery.min.js")
+        script(src="/js/index.js")
+
+            

@@ -1,0 +1,68 @@
+doctypehtml
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/dash.css" type="text/css")
+
+        title= title
+    body
+        if group === 'documentos'
+            button(class="addBtn" id="addDoc")
+                img(src="/icons/mas.svg" alt="plus")
+        else
+
+        main(class="wp-division")
+            include layout/menu.pug
+            section(class="wp-30")
+            section(class="wp-content")
+                div(class="title-wp")
+                    if group === 'documentos'
+                        h1 Documentos
+                    else if group === 'articulos'
+                        h1 Imagenes de Articulos
+                    else
+                        h1 Documentos
+                div(class="leaf")
+                    if docs === 'null'
+                        include null/docsFilter.pug
+                    else
+                        .wp-files
+                            each doc in docs
+                                .card-file
+                                    .wp-infoMan
+                                        .wp-nameFile
+                                            h3= doc.name
+                                        .wp-btnUse
+                                            button(class="dotsDisplay clickerView") 
+                                                img(src="/icons/dots.svg")
+                                            div(class="wp-edtAct" id=`${doc._id}`)
+                                                div(class="wp-editing" )
+                                                    nav
+                                                        div(class="wp-actSend")
+                                                            label(class="lbCheck" for="vsb") Visible
+                                                            input(type="checkbox", name="checkVisible" id="vsb")
+                                    .wp-imgType
+                                        img(src=`/icons/uploads/${doc.type}.svg`)
+                                    .wp-actions
+                                        a(class="btnActions download" download=doc.name href=`/${doc.ruta}`) Descargar
+                                        button(class="btnActions delete" deleterKey=`${doc._id}`) Eliminar
+        if group === 'documentos'
+            section(class="loaderUpFile")
+                div(class="wp-charger")
+            
+            section(class="uploaderFiles")
+                    input(type="file", name="files"  id="fileUp" multiple="true")
+                    button(class="closer")
+                        img(src="icons/close-wh.svg", alt="Close icon")
+                    div(class="wp-itemsUp")
+                        div(class="drop")
+                            h2 Arrastra y suelta tus archivos
+                            label(for="fileUp" ) O elige tus archivos
+        else    
+
+        script(src="/js/axios.min.js" type="text/javascript")
+        script(src="/js/sweetalert2.js" type="text/javascript")
+        script(src="/js/jquery.min.js" type="text/javascript")
+        script(src="/js/knob.js" type="text/javascript")
+        script(src="/js/dash.js" type="text/javascript")
