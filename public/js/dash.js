@@ -509,9 +509,25 @@ $(document).ready(function(){
             let paragraphs = Object.values($('.wp-leafis').children())
             paragraphs.pop()
             paragraphs.pop()
+            let childrenNode
+            let imageArray = [] 
+            let stagingArray = []
             paragraphs.forEach(item => {
-                console.log(item.children()[0])
+                childrenNode = Object.values(item.children[0].children)
+                console.log(item    )
+                stagingArray.push(item.children[0].innerHTML)
+                childrenNode.forEach(tag => {
+                    if(tag.tagName === 'IMG'){
+                        stagingArray.push(tag.outerHTML)
+                        stagingArray.push(true)
+                    }else{
+
+                    }
+                })
+                stagingArray.push(item.attributes[2].value)
             })
+            imageArray.push(stagingArray)
+            console.log(imageArray)
         }
     })
     $('#italianAdd').on('click',function(e) {
