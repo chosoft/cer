@@ -1,0 +1,31 @@
+.wp-allArticles
+    each articulo in arts
+        .wp-article
+            div(class="header")
+                h3= articulo.titulo
+                if articulo.visible
+                    div(class="visible-cont")
+                        img(src="" alt="Visible")
+                else
+                    div(class="visible-cont")
+                        img(src="" alt="Hide")
+            each parrafo in articulo.parrafos
+                div(class="parrafos")
+                    - var p = parrafo
+                    div(class="parrafoArticle") !{p}
+            .wp-actions
+                if perfilData[3] === 'admin' || id === articulo.creadorId
+                    button(class="visibleArticleBtn")
+                        img(src="/icons/dots.svg")
+                    div(class="wp-creathorThumbnail")
+                        img(src=`/${articulo.imgCreator}`)
+                        span= articulo.usernameCreator
+                    button(class="deleteArticlebtn" deleterKey="${articulo._id}")
+                        img(src="")
+                        span Eliminar
+                else
+
+                    div(class="wp-creathorThumbnail")
+                        img(src=`/${articulo.imgCreator}`)
+                        span= articulo.usernameCreator
+

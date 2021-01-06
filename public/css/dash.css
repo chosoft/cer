@@ -274,6 +274,64 @@ body {
   padding: 20px;
   background: #ffffff;
 }
+.wp-division .wp-content .leaf .wp-allArticles {
+  width: 100%;
+  height: auto;
+  padding: 25px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article {
+  width: 100%;
+  border-bottom: 3px solid #191919;
+  margin-bottom: 45px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos {
+  margin-bottom: 10px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .header {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .header h3 {
+  width: 95%;
+  font-family: "Oxygen", sans-serif;
+  font-weight: bold;
+  font-size: 45px;
+  text-align: center;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  justify-content: space-between;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail img {
+  max-width: 25px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail span {
+  text-transform: capitalize;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail span::before {
+  content: "Escrito por ";
+}
 .wp-division .wp-content .leaf .wp-files {
   width: 100%;
   height: auto;

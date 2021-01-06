@@ -1,5 +1,6 @@
 //Modules
 const mongoose = require('mongoose')
+const { all } = require('../routes/index')
 const { Schema,model } = mongoose
 const { dataArticle } = require('./usersModel')
 //Schema of the model
@@ -36,23 +37,30 @@ function getAllArcticles(){
                 let allArrayData = []
                 //Search the user that create the article
                 articles.forEach(dato => {
-                    dataArticle(id).then(usuarioData => {
+                    dataArticle(dato.creadorId).then(usuarioData => {
                         //All data of the article
                         allArticleData = {
                             _id: dato._id,
                             parrafos: dato.parrafos,
                             titulo: dato.titulo,
                             date: dato.date,
+                            creadorId: dato.creadorId,
+                            visible: dato.visible,
                             usernameCreator: usuarioData[0],
                             imgCreator: usuarioData[1]
                         }
                         allArrayData.push(allArticleData)
+                        console.log(articles.length,allArrayData.length)
+                        if(allArrayData.length === articles.length){
+                            resolve(allArrayData)
+                        }else{
+
+                        }
                     }).catch(e => {
+                        console.log(e)
                         reject(e)
                     })
                 })
-
-                resolve(allArrayData)
             }
         })
     })
@@ -79,16 +87,15 @@ function saveEraser(body,id){
 }
 function saveArticle(body){
     //Waiting for complete this function
-    return new promise((resolve, reject) => {
-        try {
-            if(body === '' || body === undefined || body === null){
-                reject('nullData')
-            }else{ 
+    return new Promise((resolve, reject) => {
+        const article = new Articulo(body)
+        article.save((err) => {
+            if(err){
+                reject(err)
+            }else{
                 resolve('ok')
             }
-        } catch (err) {
-            reject(err)
-        }
+        })
     })
 }
 

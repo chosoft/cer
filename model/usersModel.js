@@ -126,7 +126,7 @@ function returnIdData(id){
                     }else{
                         //checking his role
                         if(user.rol === 'user' || user.rol === 'admin'){
-                            const userData = [user.username, user.cargo, user.img]
+                            const userData = [user.username, user.cargo, user.img,user.rol]
                             resolve(userData)
                         }else{
                             reject('notUser')

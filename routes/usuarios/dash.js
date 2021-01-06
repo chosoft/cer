@@ -14,13 +14,13 @@ router.get('/',(req,res,next) => {
         res.redirect('/loguearse')
     }else{
         dashController(req.session.idUserLog).then(datos => {
-
             if(datos[1] === [] || Object.entries(datos[1]).length <= 0){
-                res.render('dash',{perfilData: datos[0],arts: 'nulos',title: 'Panel - Blog'})
+                res.render('dash',{perfilData: datos[0],arts: 'nulos',title: 'Panel - Blog',id:req.session.idUserLog})
             }else{
-                res.render('dash',{perfilData: datos[0],arts: datos[1],title: 'Panel - Blog'})
+                res.render('dash',{perfilData: datos[0],arts: datos[1],title: 'Panel - Blog',id:req.session.idUserLog})
             }
         }).catch(e => {
+            console.log(e)
             const errorLog = managerError(e,arrayError)
             delete e
             res.redirect('/loguearse')

@@ -133,7 +133,7 @@ $(document).ready(function(){
         })
         
     })
-    $('body').on('click','.addBlog .wp-editer .wp-leaf .wp-leafis .wp-edt .optionsP',function(e){
+/*     $('body').on('click','.addBlog .wp-editer .wp-leaf .wp-leafis .wp-edt .optionsP',function(e){
         e.preventDefault()
         const parent = $(this).parent()
         Swal.fire({
@@ -158,7 +158,7 @@ $(document).ready(function(){
             text:'Ha ocurrido un error al completar la accion',
             icon: 'error'
         }))
-    })
+    }) */
     $('#fileUp').change(function(e){
         let formData = new FormData()
         let filesList = e.target.files
@@ -386,9 +386,6 @@ $(document).ready(function(){
                     <button class="deleteP" deleterKey="${idLen}" id="deleteButton${idLen}">
                         <img src="icons/close.svg" alt="x-image">                 
                     </button>
-                    <button class="optionsP" id="optionButton${idLen}">
-                        <img src="icons/dots.svg" alt="dots-image">                 
-                    </button>
                 </div>
             `)
         }
@@ -507,27 +504,22 @@ $(document).ready(function(){
 
         }else{
             let paragraphs = Object.values($('.wp-leafis').children())
+            const title = $('.wp-title')[0].textContent
             paragraphs.pop()
             paragraphs.pop()
-            let childrenNode
-            let imageArray = [] 
-            let stagingArray = []
-            paragraphs.forEach(item => {
-                childrenNode = Object.values(item.children[0].children)
-                console.log(item    )
-                stagingArray.push(item.children[0].innerHTML)
-                childrenNode.forEach(tag => {
-                    if(tag.tagName === 'IMG'){
-                        stagingArray.push(tag.outerHTML)
-                        stagingArray.push(true)
-                    }else{
-
-                    }
-                })
-                stagingArray.push(item.attributes[2].value)
+            let arrayParagraphs = []
+            let innerReplaced
+            paragraphs.forEach(paragraph => {
+                innerReplaced = paragraph.children[0].innerHTML.replace((new RegExp("\s"),"\\s"))
+                arrayParagraphs.push(innerReplaced)
             })
-            imageArray.push(stagingArray)
-            console.log(imageArray)
+            axios.post('/api/saveArticle',{parrafos: arrayParagraphs,titulo:title})
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e)
+                })
         }
     })
     $('#italianAdd').on('click',function(e) {

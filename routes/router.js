@@ -11,6 +11,7 @@ const apiUpload = require('./../routes/documentos/logica/apiUpload')
 const apiDeleteDoc = require('./../routes/documentos/logica/deleteDoc')
 const apiRetrieve = require('./documentos/logica/apiRetrieve')
 const apiSaveEraser = require('./articulos/saveEraser')
+const apiSaveArticle = require('./articulos/saveArticle')
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
 //Modules of 404 Routes
@@ -31,6 +32,7 @@ const router = function(server){
     server.use('/api/login',apiLogin)
     server.use('/api/retrieve',apiRetrieve)
     server.use('/api/eraserSave',apiSaveEraser)
+    server.use('/api/saveArticle',apiSaveArticle)
 
     //User routes
     server.use('/users/logout',logout)
