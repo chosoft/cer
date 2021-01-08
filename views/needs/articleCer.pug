@@ -1,30 +1,31 @@
+
 .wp-allArticles
     each articulo in arts
+
         .wp-article
             div(class="header")
                 h3= articulo.titulo
                 if articulo.visible
-                    div(class="visible-cont")
-                        img(src="" alt="Visible")
+                    div(class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right")
+                        img(src="/icons/eye(1).svg" alt="Visible" )
                 else
-                    div(class="visible-cont")
-                        img(src="" alt="Hide")
+                    div(class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right")
+                        img(src="/icons/hide.svg" alt="Hide")
             each parrafo in articulo.parrafos
                 div(class="parrafos")
                     - var p = parrafo
                     div(class="parrafoArticle") !{p}
             .wp-actions
-                if perfilData[3] === 'admin' || id === articulo.creadorId
+                if perfilData[3] === 'admin' || JSON.stringify(id) === JSON.stringify(articulo.creadorId)
                     button(class="visibleArticleBtn")
                         img(src="/icons/dots.svg")
                     div(class="wp-creathorThumbnail")
                         img(src=`/${articulo.imgCreator}`)
                         span= articulo.usernameCreator
-                    button(class="deleteArticlebtn" deleterKey="${articulo._id}")
-                        img(src="")
+                    button(class="deleteArticlebtn" deleterKey=`${articulo._id}`)
+                        img(src="/icons/delete.svg")
                         span Eliminar
                 else
-
                     div(class="wp-creathorThumbnail")
                         img(src=`/${articulo.imgCreator}`)
                         span= articulo.usernameCreator

@@ -279,7 +279,7 @@ body {
   height: auto;
   padding: 25px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -289,7 +289,52 @@ body {
   margin-bottom: 45px;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle {
+  font-family: "Lato", sans-serif;
+  font-size: 19px;
+  color: #191919;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle br {
+  height: 10px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle video {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle div video {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .parrafos .parrafoArticle div img {
+  width: 100%;
+  height: auto;
+  margin-top: 5px;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .header {
   width: 100%;
@@ -297,6 +342,8 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .header h3 {
   width: 95%;
@@ -305,16 +352,65 @@ body {
   font-size: 45px;
   text-align: center;
 }
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .header .visible-cont {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .header .visible-cont img {
+  width: 30px;
+}
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: auto;
   padding: 10px;
+  justify-content: left;
+  align-items: center;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .deleteArticlebtn {
+  width: auto;
+  height: auto;
+  border: none;
+  max-width: auto;
+  border-radius: 12px;
+  padding: 12px 15px;
+  background: none;
+  color: #FE0034;
+  font-weight: bold;
+  font-family: "Oxygen", sans-serif;
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .deleteArticlebtn img {
+  max-width: 25px;
+  margin-right: 10px;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .deleteArticlebtn span {
+  color: #FE0034;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .visibleArticleBtn {
+  width: auto;
+  height: auto;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  cursor: pointer;
+}
+.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .visibleArticleBtn img {
+  height: 25px;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail {
-  width: 90%;
+  width: 85%;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -323,10 +419,14 @@ body {
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail img {
   max-width: 25px;
+  height: 25px;
+  max-height: 25px;
   border-radius: 50%;
   margin-right: 5px;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail span {
+  font-weight: bold;
+  font-size: 16px;
   text-transform: capitalize;
 }
 .wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .wp-creathorThumbnail span::before {
@@ -533,12 +633,12 @@ body {
 }
 
 .addBlog {
-  width: 0%;
+  width: 100%;
   min-height: 100vh;
   max-height: auto;
   z-index: 5;
   display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
   transition: all 0.3s ease;
   flex-direction: row;
@@ -565,10 +665,12 @@ body {
 .addBlog .wp-editer {
   display: flex;
   width: 100%;
+  overflow-Y: scroll;
   flex-direction: column;
   align-items: center;
   padding: 50px;
   padding-top: 100px;
+  height: auto;
 }
 .addBlog .wp-editer .wp-inserts {
   width: 50%;

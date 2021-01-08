@@ -30,8 +30,8 @@ function getAllArcticles(){
         Articulo.find({},function(err,articles){
             if(err){
                 reject(err)
-            }else if(articles === null){
-                reject('notArticles')
+            }else if(articles === null || articles.length <= 0){
+                resolve(articles)
             }else{
                 let allArticleData
                 let allArrayData = []
@@ -50,7 +50,6 @@ function getAllArcticles(){
                             imgCreator: usuarioData[1]
                         }
                         allArrayData.push(allArticleData)
-                        console.log(articles.length,allArrayData.length)
                         if(allArrayData.length === articles.length){
                             resolve(allArrayData)
                         }else{

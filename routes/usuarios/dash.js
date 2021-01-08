@@ -17,7 +17,8 @@ router.get('/',(req,res,next) => {
             if(datos[1] === [] || Object.entries(datos[1]).length <= 0){
                 res.render('dash',{perfilData: datos[0],arts: 'nulos',title: 'Panel - Blog',id:req.session.idUserLog})
             }else{
-                res.render('dash',{perfilData: datos[0],arts: datos[1],title: 'Panel - Blog',id:req.session.idUserLog})
+
+                res.render('dash',{perfilData: datos[0],arts: datos[1].reverse(),title: 'Panel - Blog',id:req.session.idUserLog})
             }
         }).catch(e => {
             console.log(e)

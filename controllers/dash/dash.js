@@ -13,7 +13,6 @@ function controller(id) {
                         if(Array.isArray(data) && data.length >= 3){
                             const perfilData = data
                             getArticles().then(articulos => {
-                                console.log(articulos)
                                 const dataMock = [perfilData,articulos]
                                 resolve(dataMock)
                             }).catch(e => {

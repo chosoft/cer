@@ -58,7 +58,7 @@ function saverUser(body){
                                         if(err){
                                             reject(err)
                                         }else{
-                                            reject('ok')
+                                            resolve('ok')
                                         }
                                     })
                                 }

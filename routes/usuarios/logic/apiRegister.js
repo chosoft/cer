@@ -15,6 +15,7 @@ router.post('/',(req,res,next) => {
         controller(req.body).then((ok) => {
             res.send(ok)
         }).catch(e => {
+            console.log(e)
             const errorLog = errorManager(e,arrayError)
             delete e
             res.send(errorLog)

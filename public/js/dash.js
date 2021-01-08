@@ -188,7 +188,6 @@ $(document).ready(function(){
                 <div class="LoaderBalls__item"></div>
             </div>`)
 
-        
         axios.post('/api/uploadDoc',formData,{
             onUploadProgress: (progressEvent) => {
                 if (progressEvent.lengthComputable) {
@@ -322,7 +321,7 @@ $(document).ready(function(){
         $('.uploaderFiles').css('opacity','0')
         $('.loaderUpFile').css('display','flex')
         $('.wp-charger').html(`<div class="wp-titleChg">
-                <h1 id="innerld">100%</h1>
+                <h1 id="innerld"></h1>
             </div>
             <div class="LoaderBalls">
                 <div class="LoaderBalls__item"></div>
@@ -330,7 +329,6 @@ $(document).ready(function(){
                 <div class="LoaderBalls__item"></div>
             </div>`)
 
-        
         axios.post('/api/uploadDoc',formData,{
             onUploadProgress: (progressEvent) => {
                 if (progressEvent.lengthComputable) {
@@ -348,6 +346,7 @@ $(document).ready(function(){
         }
         ).then((ok) => {
             putData()
+            console.log(ok)
             $('.loaderUpFile').css('display','none')
             $('.wp-charger').html(``)
             Swal.fire({
@@ -998,6 +997,7 @@ $(document).ready(function(){
 
             }
         }).catch(e => {
+            console.log(e)
             $('.loaderUpFile').css('display','none')
             $('.wp-charger').html(``)
             Swal.fire({
