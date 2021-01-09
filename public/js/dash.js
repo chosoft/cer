@@ -37,6 +37,32 @@ $(document).ready(function(){
         })
         .catch(e => console.log(e))
     })
+    $('body').on('click','.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .deleteArticlebtn',function(e){
+        e.preventDefault()
+        const deleterKey = $(this).attr('deleterKey')
+        Swal.fire({
+            title: 'Cuidado!',
+            text: 'Si eliminas este articulo no lo podras recuperar',
+            icon: 'warning',
+            showCancelButton: true,
+        })
+            .then(ok => {
+                if(ok.isConfirmed){
+                    axios.delete('/api/deleteArticle',{id:deleterKey})
+                        .then(ok => {
+                            console.log(ok)
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+                }else{
+
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    })
     $('body').on('click', '.selectRetrieveDoc .selectorVideo .videoInsert ',function(e){
         e.preventDefault()
         $('.selectRetrieveDoc').css('display','none')

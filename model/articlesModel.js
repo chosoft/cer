@@ -97,10 +97,21 @@ function saveArticle(body){
         })
     })
 }
-
+function deleteArticle(key){
+    return new Promise((resolve, reject) => {
+        Articulo.findByIdAndDelete(key, (err) => {
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
     saveArticle,
-    saveEraser
+    saveEraser,
+    deleteArticle
 }
