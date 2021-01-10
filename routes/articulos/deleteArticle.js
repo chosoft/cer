@@ -15,9 +15,12 @@ router.delete('/',(req,res) => {
                 res.send(ok)
             })
             .catch(e => {
+                console.log(e)
                 const errorMsg = errorManager(e,arrayError)
                 delete e
                 res.send(errorMsg)
             })
     }
 })
+
+module.exports = router

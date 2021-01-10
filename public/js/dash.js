@@ -37,6 +37,35 @@ $(document).ready(function(){
         })
         .catch(e => console.log(e))
     })
+    $('body').on('click', '.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .visibleArticleBtn',function(e){
+        e.preventDefault()
+        const changerKey = $(this).attr('changerKey')
+        Swal.fire({
+            title:'Cambia la visibilidad del articulo',
+            text: 'Que visibilidad quieres que tenga tu articulo',
+            input: 'select',
+            showCancelButton: false,
+            inputOptions:{
+                'Visibilidad':{
+                    visible: 'Visible',
+                    hide: 'Oculto'
+                }
+            }
+        })
+            .then(ok => {
+                const visibilityType = (ok.value === 'visible') ? true : false
+                axios({
+                    url: '/api/changeVisibleArticle',
+                    method: 'PUT',
+                    data: {visible:visibilityType,id:changerKey}
+                })
+                    .then(ok => console.log(ok))
+                    .catch(e => console.log(e))
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    })
     $('body').on('click','.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .deleteArticlebtn',function(e){
         e.preventDefault()
         const deleterKey = $(this).attr('deleterKey')
@@ -48,13 +77,13 @@ $(document).ready(function(){
         })
             .then(ok => {
                 if(ok.isConfirmed){
-                    axios.delete('/api/deleteArticle',{id:deleterKey})
-                        .then(ok => {
-                            console.log(ok)
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        })
+                    axios({
+                        url: '/api/deleteArticle',
+                        method: 'DELETE',
+                        data: {deleterKey}
+                    })
+                        .then(ok => console.log(ok))
+                        .catch(err => console.log(err))
                 }else{
 
                 }
@@ -109,13 +138,31 @@ $(document).ready(function(){
     })
     $('body').on('click','.wp-division .leaf .wp-files .card-file .wp-infoMan .wp-btnUse .clickerView',function(e){
         e.preventDefault()
-        let sb = $('#'+$(this).siblings()[0].id) 
-        if(sb.css('display') === 'none'){
-            sb.css('display','block')
-        }else{
-            sb.css('display','none')
-        }
-
+        const keyChanger = $(this).attr('keyChanger')
+        Swal.fire({
+            title: 'Visibilidad del documento',
+            text: 'Elije si este articulo sera visible o no',
+            input: 'select',
+            inputOptions:{
+                'Visibilidad':{
+                    visible:'Visible',
+                    hide: 'Oculto'
+                }
+            }
+        })
+            .then(ok => {
+                const visible = (ok.value === 'visible') ? true : false
+                axios.put('/api/changeDocVisibility',{keyChanger,visible})
+                    .then(ok => {
+                        console.log(ok)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            })
+            .catch(err => {
+                console.error(err)
+            })
     })
     $('body').on('click','.wp-division .leaf .wp-files .card-file .wp-actions .delete',function(e){
         e.preventDefault()

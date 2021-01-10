@@ -105,10 +105,22 @@ function saveMany(obj){
         resolve('ok')
     })
 }
+function changeVisibility(idMongo,visibility){
+    return new Promise((resolve, reject) => {
+        Documento.findOneAndUpdate({_id:idMongo},{visible:visibility},(err)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
 //Exports Functions
 module.exports = {
     getDocs: getAllDocs,
     saveDocs,
     deleteDoc,
-    filterDocs: getFilterDocs
+    filterDocs: getFilterDocs,
+    changeVisibility
 }

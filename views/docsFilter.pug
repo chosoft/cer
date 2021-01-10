@@ -4,6 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/css/dash.css" type="text/css")
+        link(rel="stylesheet", href="/css/ballon.css" type="text/css")
 
         title= title
     body
@@ -34,7 +35,7 @@ html(lang="en")
                                         .wp-nameFile
                                             h3= doc.name
                                         .wp-btnUse
-                                            button(class="dotsDisplay clickerView") 
+                                            button(class="dotsDisplay clickerView" keyChanger=`${doc._id}`) 
                                                 img(src="/icons/dots.svg")
                                             div(class="wp-edtAct" id=`${doc._id}`)
                                                 div(class="wp-editing" )
@@ -42,8 +43,12 @@ html(lang="en")
                                                         div(class="wp-actSend")
                                                             label(class="lbCheck" for="vsb") Visible
                                                             input(type="checkbox", name="checkVisible" id="vsb")
-                                    .wp-imgType
-                                        img(src=`/icons/uploads/${doc.type}.svg`)
+                                    if doc.visible
+                                        .wp-imgType(aria-label="Documento visible" data-balloon-pos="right")
+                                            img(src=`/icons/uploads/${doc.type}.svg`)
+                                    else
+                                        .wp-imgType(aria-label="Documento oculto" data-balloon-pos="right")
+                                            img(src=`/icons/uploads/${doc.type}.svg`)
                                     .wp-actions
                                         a(class="btnActions download" download=doc.name href=`/${doc.ruta}`) Descargar
                                         button(class="btnActions delete" deleterKey=`${doc._id}`) Eliminar

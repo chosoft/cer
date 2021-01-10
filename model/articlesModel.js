@@ -97,9 +97,21 @@ function saveArticle(body){
         })
     })
 }
+function changeVisibility(key,visibility){
+    return new Promise((resolve, reject) => {
+        Articulo.findOneAndUpdate({_id:key},{visible:visibility},(err)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
 function deleteArticle(key){
     return new Promise((resolve, reject) => {
-        Articulo.findByIdAndDelete(key, (err) => {
+        const {deleterKey} = key
+        Articulo.findByIdAndDelete(deleterKey, (err) => {
             if(err){
                 reject(err)
             }else{
@@ -113,5 +125,6 @@ module.exports = {
     getArticles:getAllArcticles,
     saveArticle,
     saveEraser,
-    deleteArticle
+    deleteArticle,
+    changeVisibility
 }

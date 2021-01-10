@@ -17,7 +17,7 @@
                     div(class="parrafoArticle") !{p}
             .wp-actions
                 if perfilData[3] === 'admin' || JSON.stringify(id) === JSON.stringify(articulo.creadorId)
-                    button(class="visibleArticleBtn")
+                    button(class="visibleArticleBtn" changerKey=`${articulo._id}`)
                         img(src="/icons/dots.svg")
                     div(class="wp-creathorThumbnail")
                         img(src=`/${articulo.imgCreator}`)
