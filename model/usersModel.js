@@ -165,12 +165,28 @@ function returnDataArticle(id){
         }
     })
 }
-
+function returnPerfilData(id){
+    return new Promise((resolve, reject) => {
+        if(id === '' || id === undefined || id === null){
+            reject('idNull')
+        }else{
+            Usuario.findById(id, function(err,userData){
+                if(err){
+                    reject(err)
+                }else{
+                    const dataPerfil = [userData.correo,userData.fecha]
+                    resolve(dataPerfil)
+                }
+            })
+        }
+    })
+}
 //Exports functions
 module.exports = {
     saveUser:saverUser,
     loginUser,
     dataUser: returnIdData,
-    dataArticle: returnDataArticle
+    dataArticle: returnDataArticle,
+    dataPerfil: returnPerfilData
 }
 

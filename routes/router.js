@@ -4,6 +4,7 @@ const loginRouter = require('./usuarios/loguearse')
 const registrarseRouter = require('./usuarios/registrarse')
 const dashRouter = require('./usuarios/dash')
 const docsRouter = require('./documentos/documentos')
+const perfilRouter = require('./perfil/perfil')
 //Modules of Routes of API
 const apiRegister = require('./usuarios/logic/apiRegister')
 const apiLogin = require('./usuarios/logic/apiLoguearse')
@@ -27,6 +28,7 @@ const router = function(server){
     server.use('/private/c/registro',registrarseRouter)
     server.use('/dash',dashRouter)
     server.use('/documentos',docsRouter)
+    server.use('/perfil',perfilRouter)
 
     //Api routes
     server.use('/api/uploadDoc',apiUpload)
