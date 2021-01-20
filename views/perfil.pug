@@ -8,9 +8,7 @@ html(lang="es")
         link(rel="stylesheet", href="/css/ballon.css" type="text/css")
         link(rel="stylesheet", href="/css/dash.css" type="text/css")
     body
-        button(class="addBtn" id="addBlog")
-            img(src="icons/mas.svg" alt="plus")
-        
+
         main(class="wp-division")
             include layout/menu.pug
             section(class="wp-30")
@@ -18,8 +16,33 @@ html(lang="es")
                 div(class="title-wp")
                     h1 Perfil
                 div(class="leaf")
-                    p= dataVariable
-
+                    div(class="wp-imgPerfilEdt")
+                        div(class="contImgHover")
+                            img(class="imgProfile" src=`/${perfilData[2]}` alt="user img profile")
+                            div(class="overCaption")
+                                img(class="editImg" src="/icons/edit.svg" alt="imagen editar")
+                    div(class="wp-allChangerData")
+                        div(class="blockData")
+                            div(class="wp-placeData")
+                                img(class="iconDataPlace" src="/icons/id-card.svg" alt="user icon")   
+                                span= perfilData[0]
+                                button(class="editUserBtn" keyChange=`${id}`) Editar
+                            div(class="wp-placeData")
+                                img(class="iconDataPlace" src="/icons/envelope.svg" alt="mail icon")
+                                span= dataVariable[0]
+                            div(class="wp-placeData")
+                                img(class="iconDataPlace" src="/icons/calendar.svg" alt="date icon")
+                                span= `${dataVariable[1].getDay()}/${dataVariable[1].getMonth()+1}/${dataVariable[1].getFullYear()}`
+                        
+                        div(class="blockData")
+                            .wp-titleChange
+                                h3 Cambiar contraseñas
+                            .wp-blockChange
+                                label(for="pass1") Nueva contraseña
+                                input(class="passwordInput" id="pass1" placeholder="Nueva contraseña")
+                                label(for="pass2") Nueva contraseña(nuevamente)
+                                input(class="passwordInput" id="pass2" placeholder="Nueva contraseña(nuevamente)")
+                                button(id="sendPasswords" keyChange=`${id}`) Enviar
 
         script(src="js/axios.min.js" type="text/javascript")
         script(src="js/sweetalert2.js" type="text/javascript")

@@ -274,6 +274,148 @@ body {
   padding: 20px;
   background: #ffffff;
 }
+.wp-division .wp-content .leaf .wp-imgPerfilEdt {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  padding: 15px 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.wp-division .wp-content .leaf .wp-imgPerfilEdt .contImgHover {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.wp-division .wp-content .leaf .wp-imgPerfilEdt .contImgHover:hover .overCaption {
+  opacity: 1;
+}
+.wp-division .wp-content .leaf .wp-imgPerfilEdt .contImgHover .imgProfile {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.wp-division .wp-content .leaf .wp-imgPerfilEdt .contImgHover .overCaption {
+  position: absolute;
+  display: flex;
+  opacity: 0;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 3;
+  align-items: center;
+  background: rgba(25, 25, 25, 0.75);
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+.wp-division .wp-content .leaf .wp-imgPerfilEdt .contImgHover .overCaption .editImg {
+  width: 80px;
+  height: 80px;
+}
+.wp-division .wp-content .leaf .wp-allChangerData {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 15px;
+  width: 50%;
+  height: auto;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData:last-child {
+  border-left: 1px solid #191919;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-placeData {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-placeData img {
+  max-width: 45px;
+  margin-right: 10px;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-placeData span {
+  font-family: "Oxygen", sans-serif;
+  font-size: 23px;
+  font-weight: normal;
+  margin-right: 40px;
+  color: #191919;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-placeData button {
+  padding: 10px 35px;
+  background: #FED83F;
+  border: none;
+  border-radius: 12px;
+  font-size: 19px;
+  color: #fff;
+  font-family: "Oxygen", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-titleChange {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  padding-top: 0;
+  padding-left: 0;
+  margin-bottom: 10px;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-titleChange h3 {
+  text-align: left;
+  font-family: "Oxygen", sans-serif;
+  font-weight: bold;
+  font-size: 35px;
+  color: #191919;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-blockChange {
+  display: flex;
+  flex-direction: column;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-blockChange label {
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+  font-family: "Oxygen", sans-serif;
+  font-size: 20px;
+  color: #191919;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-blockChange input {
+  width: 50%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 19px;
+}
+.wp-division .wp-content .leaf .wp-allChangerData .blockData .wp-blockChange button {
+  padding: 10px 35px;
+  background: #FED83F;
+  border: none;
+  border-radius: 12px;
+  font-size: 19px;
+  color: #fff;
+  font-family: "Oxygen", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  width: 20%;
+}
 .wp-division .wp-content .leaf .wp-allArticles {
   width: 100%;
   height: auto;

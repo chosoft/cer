@@ -12,7 +12,7 @@ router.get('/',(req,res) => {
         res.redirect('/loguearse')
     }else{
         controller(idSession)
-            .then(ok => res.render('perfil',{perfilData: ok[0],dataVariable: ok[1]}))
+            .then(ok => res.render('perfil',{perfilData: ok[0],dataVariable: ok[1], id: idSession}))
             .catch(e => {
                 console.log(e)
                 const errorMSG = errorManager(e,arrayError)

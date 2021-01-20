@@ -1,4 +1,30 @@
 $(document).ready(function(){
+    $('.editUserBtn').click(function(e){
+        e.preventDefault();
+        const keyChange = $(this).attr('keyChange')
+        Swal.fire({
+            title: 'Cambiar nombre de usuario',
+            text: 'Escribe tu nuevo nombre de usuario',
+            input: 'text',
+            showCancelButton: true
+        })
+            .then(dataAlert => {
+                const name = dataAlert.value                
+                axios.post('/api/changeUserName',{username: name})
+                    .then(ok => {
+                        Swal.fire({
+                            title: 'Bien hecho',
+                            icon: 'succes',
+                            text: 'Tu nombre de usuario se ha cambiado satisfactoriamente actualiza la pagina para verlo',
+                            showCancelButton: false
+                        })
+                    })
+                    .catch(console.log(e))
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    })
     $('body').on('click', '.selectRetrieveDoc .selector .imageInsert',function(e){
         e.preventDefault()
         $('.selectRetrieveDoc').css('display','none')
