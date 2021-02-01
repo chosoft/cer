@@ -16,6 +16,9 @@ const apiSaveEraser = require('./articulos/saveEraser')
 const apiSaveArticle = require('./articulos/saveArticle')
 const apiDeleteArticle = require('./articulos/deleteArticle')
 const apiChangeVisibleArticle = require('./articulos/changeVisibility')
+const apiChangeUserName = require('./usuarios/logic/apiChangeUserName')
+const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
+
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
 //Modules of 404 Routes
@@ -41,6 +44,9 @@ const router = function(server){
     server.use('/api/saveArticle',apiSaveArticle)
     server.use('/api/deleteArticle',apiDeleteArticle)
     server.use('/api/changeVisibleArticle',apiChangeVisibleArticle)
+    server.use('/api/changeUserName',apiChangeUserName)
+    server.use('/api/changeImgProfile',apiChangeImgProfile)
+
 
     //User routes
     server.use('/users/logout',logout)

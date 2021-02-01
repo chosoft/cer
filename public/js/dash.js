@@ -1,4 +1,36 @@
 $(document).ready(function(){
+    $('.contImgHover').click(function(e){
+        e.preventDefault();
+        Swal.fire({
+            text: 'Elige tu nueva imagen de perfil',
+            input: 'file',
+            title: 'Imagen de perfil',
+            inputAttributes:{
+                'accept': 'image/*',
+                'multiple': false
+            }
+        })
+        .then(dataSet => {
+            const formData = new FormData();
+            formData.append("myFiles", dataSet.value[0][0]);
+            axios.post('/api/changeImgProfile',formData,{
+               headers: {
+                   contentType: 'multipart/form-data'
+               }
+           })
+            .then(ok => {
+                Swal.fire({
+                    title: 'Imagen Cambiada',
+                    icon: 'succes',
+                    text: 'Actuliza la imagen para ver tu nueva imagen'
+                })
+            })
+            .catch(e => console.log(e))
+        })
+        .catch(e => {
+            conosole.log(e)
+        })
+    })
     $('.editUserBtn').click(function(e){
         e.preventDefault();
         const keyChange = $(this).attr('keyChange')
@@ -744,7 +776,7 @@ $(document).ready(function(){
                             input: 'file',
                             inputAttributes:{
                                 'accept': 'image/*',
-                                multiple: false
+                                'multiple': false
                             }
                         },
                         {
