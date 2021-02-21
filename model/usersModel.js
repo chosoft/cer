@@ -192,8 +192,16 @@ function changeUserName(id,username){
         })
     })
 }
-function changeImgUser(id,k ){
-
+function changeImgUser(id,profileImg){
+    return new Promise((resolve, reject) => {
+        Usuario.findByIdAndUpdate(id,{img:profileImg},(err)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
 }
 //Exports functions
 module.exports = {
@@ -202,6 +210,7 @@ module.exports = {
     dataUser: returnIdData,
     dataArticle: returnDataArticle,
     dataPerfil: returnPerfilData,
-    changeUserName
+    changeUserName,
+    changeImgUser
 }
 

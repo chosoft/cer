@@ -18,6 +18,7 @@ const apiDeleteArticle = require('./articulos/deleteArticle')
 const apiChangeVisibleArticle = require('./articulos/changeVisibility')
 const apiChangeUserName = require('./usuarios/logic/apiChangeUserName')
 const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
+const apiChangePassword = require('./usuarios/logic/apiChangePassword')
 
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
@@ -46,7 +47,7 @@ const router = function(server){
     server.use('/api/changeVisibleArticle',apiChangeVisibleArticle)
     server.use('/api/changeUserName',apiChangeUserName)
     server.use('/api/changeImgProfile',apiChangeImgProfile)
-
+    server.use('/api/changeUserPassword',apiChangePassword)
 
     //User routes
     server.use('/users/logout',logout)

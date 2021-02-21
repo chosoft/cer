@@ -1,4 +1,30 @@
 $(document).ready(function(){
+    $('#sendPasswords').click(function(e){
+        e.preventDefault()
+        const passwordOne = $('#pass1').val()
+        const passwordTwo = $('#pass2').val()
+
+        if(passwordOne === passwordTwo){
+            axios.post('/api/changeUserPassword',{passwordOne,passwordTwo})
+                .then(ok => {
+                    console.log(ok)
+                })
+                .catch(e => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ha ocurrido un error al cambiar tu contraseña',
+                        icon: 'error'
+                    })
+                })
+        }else{
+            Swal.fire({
+                title: 'Contraseñas incorrectas',
+                icon: 'error',
+                text: 'Tus contraseñas deben coincidir, asegurate de que lo hagan'
+            })
+        }
+
+    })
     $('.contImgHover').click(function(e){
         e.preventDefault();
         Swal.fire({
@@ -12,23 +38,24 @@ $(document).ready(function(){
         })
         .then(dataSet => {
             const formData = new FormData();
-            formData.append("myFiles", dataSet.value[0][0]);
+            formData.append("myFiles", dataSet.value[0]);
             axios.post('/api/changeImgProfile',formData,{
                headers: {
                    contentType: 'multipart/form-data'
                }
            })
             .then(ok => {
+                console.log(ok)
                 Swal.fire({
                     title: 'Imagen Cambiada',
-                    icon: 'succes',
+                    icon: 'success',
                     text: 'Actuliza la imagen para ver tu nueva imagen'
                 })
             })
             .catch(e => console.log(e))
         })
         .catch(e => {
-            conosole.log(e)
+            console.log(e)
         })
     })
     $('.editUserBtn').click(function(e){
@@ -46,7 +73,7 @@ $(document).ready(function(){
                     .then(ok => {
                         Swal.fire({
                             title: 'Bien hecho',
-                            icon: 'succes',
+                            icon: 'success',
                             text: 'Tu nombre de usuario se ha cambiado satisfactoriamente actualiza la pagina para verlo',
                             showCancelButton: false
                         })
