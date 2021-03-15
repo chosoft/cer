@@ -1,3 +1,4 @@
+//Enviroment Variables
 require('dotenv').config()
 
 const config = {

@@ -19,9 +19,18 @@ const eraserSchema = new Schema({
     date: {required: true,type:Date,default: Date.now()},
     group: {required: true,type:String,default:'dash'}
 })
+const myArticlesSchema = new Schema({
+    titulo: {required: true,type:String},
+    parrafos: {required: true,type:Array},
+    creadorId: {required: true,type:mongoose.ObjectId},
+    date: {required: true,type:Date,default: Date.now()},
+    visible: {required: true,type:Boolean, default: false},
+    ip: {required: true,type:String}
+})
 //Model from schema
 const Articulo = new model('Articulo',articulosBlogSchema)
 const Eraser = new model('Eraser',eraserSchema) 
+const MyArticle = new model('ArticuloUser',myArticlesSchema)
 
 //Functions CRUD
 function getAllArcticles(){
@@ -120,11 +129,25 @@ function deleteArticle(key){
         })
     })
 }
+function getMyArticles(id){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const docs = MyArticle.find({})
+            if(docs === '' || docs === null || docs.length <= 0){
+                resolve('nulos')
+            }
+            resolve(docs)
+        }catch(e){
+            reject(e)
+        }
+    })
+}
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
     saveArticle,
     saveEraser,
     deleteArticle,
-    changeVisibility
+    changeVisibility,
+    getMyArticles
 }

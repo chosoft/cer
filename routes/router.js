@@ -5,6 +5,7 @@ const registrarseRouter = require('./usuarios/registrarse')
 const dashRouter = require('./usuarios/dash')
 const docsRouter = require('./documentos/documentos')
 const perfilRouter = require('./perfil/perfil')
+const articulosRouter = require('./articulos/articulosPersonal')
 //Modules of Routes of API
 const apiRegister = require('./usuarios/logic/apiRegister')
 const apiLogin = require('./usuarios/logic/apiLoguearse')
@@ -19,7 +20,7 @@ const apiChangeVisibleArticle = require('./articulos/changeVisibility')
 const apiChangeUserName = require('./usuarios/logic/apiChangeUserName')
 const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
 const apiChangePassword = require('./usuarios/logic/apiChangePassword')
-
+const apiSaveUserArticle = require('./articulos/apiSaveArticle.js')
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
 //Modules of 404 Routes
@@ -33,7 +34,7 @@ const router = function(server){
     server.use('/dash',dashRouter)
     server.use('/documentos',docsRouter)
     server.use('/perfil',perfilRouter)
-
+    server.use('/articulos', articulosRouter)
     //Api routes
     server.use('/api/uploadDoc',apiUpload)
     server.use('/api/deleteDoc',apiDeleteDoc)
@@ -48,6 +49,7 @@ const router = function(server){
     server.use('/api/changeUserName',apiChangeUserName)
     server.use('/api/changeImgProfile',apiChangeImgProfile)
     server.use('/api/changeUserPassword',apiChangePassword)
+    server.use('/api/saveUserArticle',apiSaveUserArticle)
 
     //User routes
     server.use('/users/logout',logout)

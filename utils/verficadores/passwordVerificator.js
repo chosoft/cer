@@ -13,11 +13,13 @@ function validate(obj){
         try {
             const valueSchema =  Schema.validate(obj)
             if(valueSchema.error === undefined || valueSchema.error === ''){
-                resolve({password:obj.passwordOne})
+                resolve({password:obj.passwordOne,error:''})
             }
-            reject(valueSchema.error)
+            reject({password:'', error: valueSchema.error})
         } catch (e) {
             reject(e)            
         }
     })
 }
+
+module.exports = validate

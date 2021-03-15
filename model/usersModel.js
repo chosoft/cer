@@ -203,6 +203,27 @@ function changeImgUser(id,profileImg){
         })
     })
 }
+function changePasswordUser(id,password){
+    return new Promise((resolve, reject) => {
+        const random = randomNumber(1,20)
+        bcrypt.genSalt(random,function(err,salt){
+            if(err){
+                reject(err)
+            }
+            bcrypt.hash(password,salt,function(err,hash){
+                if(err){
+                    reject(err)
+                }
+                Usuario.findByIdAndUpdate(id,{password:hash},function(err,query){
+                    if(err){
+                        reject(err)
+                    }
+                    resolve('ok')
+                })
+            })
+        })
+    })
+}
 //Exports functions
 module.exports = {
     saveUser:saverUser,
@@ -211,6 +232,7 @@ module.exports = {
     dataArticle: returnDataArticle,
     dataPerfil: returnPerfilData,
     changeUserName,
-    changeImgUser
+    changeImgUser,
+    changePasswordUser
 }
 
