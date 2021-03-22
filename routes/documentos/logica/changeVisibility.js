@@ -3,24 +3,23 @@ const router = express.Router()
 
 const controller = require('./../../../controllers/documentos/changeVisibility')
 
+const checker = require('./../../../utils/auth/userVerify')
+
 const errorManager = require('./../../../utils/errors/typeError')
 const arrayError = ['notUser','notKey','notVisibility']
 
-router.put('/',(req,res) => {
-    if(req.session.idUserLog === undefined || req.session.idUserLog === null || req.session.idUserLog === ''){
-        res.send('notUser')
-    }else{
-        const id = req.session.idUserLog
-        const { keyChanger,visible } = req.body
-        console.log(req.body)
-        controller(id,keyChanger,visible)
-            .then(ok => res.send(ok))
-            .catch(e => {
-                const errorMessage = errorManager(e,arrayError)
-                delete e 
-                res.send(errorMessage)
-            })
-    }   
+router.put('/',checker,async(req,res) => {
+    try {
+        const id = req.session.idUserLog        
+        const keyChanger = req.body.keyChanger ? req.body.keyChanger : 'nulo'
+        const visible = req.body.visible ? req.body.visible : false
+        const controllerResponse = await controller(id,keyChanger,visible)
+        res.send(controllerResponse)
+    } catch (e) {
+        const errorLog = errorManager(e,arrayError)
+        delete e 
+        res.send(errorLog)
+    }
 })
 
 module.exports = router

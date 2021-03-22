@@ -8,7 +8,8 @@ const errorManager = require('./../../../utils/errors/typeError')
 //Config to error handler
 const arrayError = ['nulos','badCheck','registerYet']
 //Router and his methods
-router.post('/',(req,res,next) => {
+router.post('/',async (req,res) => {
+    
     if(Object.keys(req.body).length <= 0 || req.body === undefined || req.body === ''){
         res.send('nulos')
     }else{

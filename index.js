@@ -3,10 +3,10 @@ const express = require('express')
 const path = require('path')
 const helmet = require('helmet')
 const compression = require('compression')
-const bodyParser = require('body-parser')
 const session = require('express-session')
 const router = require('./routes/router.js')
-const {config} = require('./config/config')
+const routerApi = require('./routes/routerApi.js')
+const { config } = require('./config/config')
 const process = require('process')
 const app = express()
 
@@ -24,8 +24,8 @@ app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname,'public')))
 
 //Middlewares
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 app.use(helmet())
 app.use(compression())
 app.use(session({
@@ -39,7 +39,8 @@ app.use(session({
 //Disable The x-powered-by Security
 app.disable('x-powered-by')
 
-//Router
+//Routers
+routerApi(app)
 router(app)
 
 //Running server

@@ -2,9 +2,15 @@
 const { dataUser } = require('./../../model/usersModel')
 const { filterDocs } = require('./../../model/documentModel')
 //Controller function
-function controller(id,type='image'){
-    return new Promise((resolve, reject) => {
-        if(id === undefined || id === null || id === ''){
+function controller(type='image'){
+    return new Promise(async (resolve, reject) => {
+        try {
+           const filterDocsResponse = await filterDocs(type) 
+           resolve(filterDocsResponse)
+        } catch (e) {
+            reject(e)
+        }
+        /* if(id === undefined || id === null || id === ''){
             reject('null')
         }else{
             dataUser(id).then(dataRender => {
@@ -18,7 +24,7 @@ function controller(id,type='image'){
                     reject('notUser')
                 }
             }).catch(err => reject(err))
-        }
+        } */
     })
 }
 module.exports = controller

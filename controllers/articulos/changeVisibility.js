@@ -1,8 +1,17 @@
-const { dataUser } = require('./../../model/usersModel')
 const { changeVisibility } = require('./../../model/articlesModel')
-function controller(id,keyChange,visibility) {
-    return new Promise((resolve, reject) => {
-        if(id === undefined || id === null || id === ''){
+function controller(keyChange,visibility) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            if(keyChange === 'nulo'){
+                reject('notChangeKey')
+            }else{
+                const changeVisibilityResponse = await changeVisibility(keyChange,visibility)
+                resolve(changeVisibilityResponse)
+            }
+        } catch (e) {
+            reject(e)
+        }
+/*         if(id === undefined || id === null || id === ''){
             reject('notUser')
         }else{
             if(keyChange === '' || keyChange === undefined || keyChange === null){
@@ -24,7 +33,7 @@ function controller(id,keyChange,visibility) {
                     reject('notVisibility')
                 }
             }
-        }
+        } */
     })
 }
 

@@ -4,41 +4,27 @@ const router = express.Router()
 //Controllers
 const controller = require('./../../controllers/documentos/controller')
 const filterController = require('./../../controllers/documentos/filterCont')
+//Middleware
+const checker = require('./../../utils/auth/userVerify')
 //Functions to manager
 const managerError = require('./../../utils/errors/typeError')
 //Config to error handler
 const arrayError = ['userNull','groupNull','notUser','null']
 //Routes and his methods
-router.get('/',(req,res) => {
-    if(req.session.idUserLog === undefined){
-        res.redirect('/loguearse')
-    }else{
-        const idUser = req.session.idUserLog
-
-        if(req.query.g === undefined || req.query.g === null || req.query.g === ''){
-            //Not filter
-            controller(idUser).then((data) => {
-                res.render('docs',{perfilData: data[0],grupos: data[1],title: 'Docs'})
-            }).catch((err) =>{
-                delete err
-                res.redirect('/loguearse')
-            })
+router.get('/',checker, async (req,res) => {
+    try{
+        const id = req.session.idUserLog
+        const query = req.query.g ? req.query.g : 'nulo'
+        if(query === 'nulo'){
+            const controllerAllResponse = await  controller(id)
+            res.render('docs',{...controllerAllResponse,title:'Docs'})
         }else{
-            //Filter by group
-            const searchFiles = req.query.g
-            filterController(idUser,searchFiles).then(allData => {
-                if(Array.isArray(allData[1]) && allData[1].length > 0){
-                    res.render('docsFilter',{perfilData:allData[0],docs:allData[1].reverse(),title:'Documentos',group:searchFiles});
-                }else{
-                    res.render('docsFilter',{perfilData:allData[0],docs:'null',title:'Documentos', group:searchFiles});
-                }
-            }).catch((err) =>{
-                const errorLog = managerError(e,arrayError)
-                delete err
-                res.send(errorLog)
-            })
-            
+            const controllerFilterResponse = await filterController(id,query)
+            res.render('docsFilter',{...controllerFilterResponse,title:'Documentos',group:query})
         }
+    }catch(e){
+        delete e 
+        res.redirect('/loguearse')
     }
 })
 

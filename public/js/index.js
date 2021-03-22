@@ -91,6 +91,7 @@ $(document).ready(function(){
         const data = {
             correo: $('#correo').val(),
             password: $('#pass1').val(),
+            
         }
         axios({
             method: 'POST',
@@ -98,6 +99,7 @@ $(document).ready(function(){
             data,
 
         }).then(ok => {
+            console.log(ok)
             if(ok.data === 'success') {
                 Swal.fire({
                     title: 'Logueado correctamente',

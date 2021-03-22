@@ -3,11 +3,21 @@ const router = express.Router()
 
 const controller = require('./../../../controllers/usuarios/apiChangeUserName')
 
-const errorManager = require('./../../../utils/errors/typeError')
-const arraError = []
+const checker = require('./../../../utils/auth/userVerify')
 
-router.post('/',(req,res) => {
-    const id = req.session.idUserLog
+const managerError = require('./../../../utils/errors/typeError')
+const arrayError = []
+
+router.post('/',checker,async (req,res) => {
+    try {
+        const id = req.session.idUserLog
+        
+    } catch (e) {
+        const errorLog = managerError(e,arrayError)
+        delete e 
+        res.send(errorLog)
+    }
+/*     const id = req.session.idUserLog
     if(id === '' || id === null || id === undefined){
         res.send('notUser')
     }else{  
@@ -25,7 +35,7 @@ router.post('/',(req,res) => {
                     res.send(errorMsg)
                 })
         }
-    }
+    } */
 })
 
 module.exports = router

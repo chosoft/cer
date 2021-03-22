@@ -3,29 +3,22 @@ const express = require('express')
 const router = express.Router()
 //Controllers 
 const dashController = require('../../controllers/dash/dash')
-//Functions to manager
-const managerError = require('./../../utils/errors/typeError')
-//Config to error handler
-const arrayError = ['idNull','notUser','null','notArticles']
-
+//Middleware checker id 
+const checker = require('./../../utils/auth/userVerify')
 //Routes and his methods
-router.get('/',(req,res,next) => {
-    if(req.session.idUserLog === undefined){
+router.get('/',checker,async (req,res) => {
+    try {
+        const id = req.session.idUserLog 
+        const controllerResponse = await dashController(id)
+        const articles = controllerResponse.arts.reverse()
+        if(articles.length <= 0 ){
+            res.render('dash',{perfilData: controllerResponse.perfilData,arts:'nulos',title:'Panel - Blog',id})
+        }else{
+            res.render('dash',{perfilData: controllerResponse.perfilData,arts:articles,title:'Panel - Blog',id})
+        }
+    } catch (e) {
+        delete e
         res.redirect('/loguearse')
-    }else{
-        dashController(req.session.idUserLog).then(datos => {
-            if(datos[1] === [] || Object.entries(datos[1]).length <= 0){
-                res.render('dash',{perfilData: datos[0],arts: 'nulos',title: 'Panel - Blog',id:req.session.idUserLog})
-            }else{
-
-                res.render('dash',{perfilData: datos[0],arts: datos[1].reverse(),title: 'Panel - Blog',id:req.session.idUserLog})
-            }
-        }).catch(e => {
-            console.log(e)
-            const errorLog = managerError(e,arrayError)
-            delete e
-            res.redirect('/loguearse')
-        })
     }
 })
 

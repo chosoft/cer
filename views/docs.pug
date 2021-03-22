@@ -15,16 +15,16 @@ html(lang="es")
                 div(class="title-wp")
                     h1 Documentos
                 div(class="leaf")
-                    if articulos === 'null'
+                    if articulos === 'nulos'
                         include null/docs.pug
                     else
                         div(class="wp-filesUpload")
-                            each grupo in grupos
+                            each group in groups
                                 div(class="wp-section")
                                     .wp-titleGroup
-                                        h1= grupo.name
+                                        h1= group.name
                                     .wp-linkTo
-                                        a(href=`/documentos?g=${grupo.url}`) Ir ahora
+                                        a(href=`/documentos?g=${group.url}`) Ir ahora
 
         
             

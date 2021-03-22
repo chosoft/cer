@@ -291,32 +291,6 @@ $(document).ready(function(){
         })
         
     })
-/*     $('body').on('click','.addBlog .wp-editer .wp-leaf .wp-leafis .wp-edt .optionsP',function(e){
-        e.preventDefault()
-        const parent = $(this).parent()
-        Swal.fire({
-            title:'Como se vera este parrafo',
-            text:'Selecciona un tipo de parrafo',
-            input:'select',
-            showCancelButton: false,
-            inputOptions:{
-                'Parrafos':{
-                    coverimage:'Imagen al inicio',
-                    finalCover: 'Imagen al final',
-                    normalCover: 'Imagen en posicion original'
-                }
-            }
-        })
-        .then(data => {
-            const typeParagraph = data.value
-            parent.attr('typep', typeParagraph)
-        })
-        .catch(e => Swal.fire({
-            title: 'Error',
-            text:'Ha ocurrido un error al completar la accion',
-            icon: 'error'
-        }))
-    }) */
     $('#fileUp').change(function(e){
         let formData = new FormData()
         let filesList = e.target.files

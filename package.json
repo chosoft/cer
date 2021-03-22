@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cryptr": "^6.0.2",
     "dotenv": "^8.2.0",
@@ -29,7 +28,9 @@
     "tar-fs": "^2.1.0"
   },
   "nodemonConfig": {
-    "ignore": ["public/*"],
+    "ignore": [
+      "public/*"
+    ],
     "delay": "1000"
   },
   "devDependencies": {

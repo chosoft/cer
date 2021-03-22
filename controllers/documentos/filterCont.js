@@ -3,39 +3,19 @@ const { dataUser } = require('./../../model/usersModel')
 const { getDocs } = require('./../../model/documentModel')
 
 //Function controller
-function controller(idUser,q){
-    return new Promise((resolve, reject) => {
+function controller(id,group){
+    return new Promise(async (resolve, reject) => {
         try {
-            if(idUser === undefined || idUser === null || idUser === ''){
-                reject('userNull')
+            const perfilData = await dataUser(id)
+            const finalGroup = (group === 'documentos' || group === 'articulos') ? group : 'documentos'
+            const docs = await getDocs(finalGroup)
+            if(docs.length <= 0){
+                resolve({perfilData,docs:'nulos'})
             }else{
-                if(q === undefined || q === null || q === ''){
-                    reject('groupNull')
-                }else{
-                    dataUser(idUser).then(dataRender => {
-                        if(Array.isArray(dataRender) && dataRender.length >=3 ){
-                            const perfilData = dataRender
-                            getDocs(q).then(docs => {
-                                if(docs.length <= 0 || docs === undefined || docs === null ||docs === ''){
-                                    const dataFinal = [perfilData,'nulos']
-                                    resolve(dataFinal)
-                                }else{
-                                    const dataFinal = [perfilData,docs]
-                                    resolve(dataFinal)
-                                }
-                            }).catch(e => {
-                                reject(e)
-                            })
-                        }else{
-                            reject('notUser')
-                        }
-                    }).catch(e => {
-                        reject(e)
-                    })
-                }
+                resolve({perfilData,docs:docs.reverse()})
             }
-        } catch (err) {
-            reject(err)
+        } catch (e) {
+            reject(e)
         }
     })
 }

@@ -4,23 +4,21 @@ const router = express.Router()
 
 const controller = require('./../../controllers/articulos/saveController.js')
 
-const errorLog = require('./../../utils/errors/typeError')
+const checker = require('./../../utils/auth/userVerify')
+
+const managerError = require('./../../utils/errors/typeError')
 const arrayError = ['dataNull','objNull']
 
-router.post('/', (req, res) => {
-    if(req.session.idUserLog === undefined || req.session.idUser === null || req.session.idUserLog === ''){
-        res.send('notUser')
-    }else{
-        controller(req.session.idUserLog,req.body,req.ip)
-            .then(ok => {
-                res.send(ok)
-            })
-            .catch(e => {
-                console.log(e)
-                const erroMsg = errorLog(e,arrayError)
-                delete e
-                res.send(erroMsg)
-            })
+router.post('/',checker,async (req, res) => {
+    try {
+        const id = req.session.idUserLog
+        const ip = req.ip
+        const controllerSaveResponse = await controller(id,req.body,ip)
+        res.send(controllerSaveResponse)
+    } catch (e) {
+        const errorLog = managerError(e,arrayError)
+        delete e 
+        res.send(errorLog)
     }
 })
 

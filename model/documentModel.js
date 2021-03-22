@@ -95,6 +95,7 @@ function saveMany(obj){
             }
             docs = new Documento(oneDoc)
             docs.save((err) => {
+                console.log(err)
                 if(err){
                     reject(err)
                 }else{

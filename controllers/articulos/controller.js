@@ -1,8 +1,17 @@
-const { dataUser } = require('./../../model/usersModel')
 const { saveEraser } = require('./../../model/articlesModel')
 function controller(id,obj){
-    return new Promise((resolve, reject) => {
-        if(id === undefined || id === null || id === '' ){
+    return new Promise(async(resolve, reject) => {
+        try {
+            if(Object.entries(obj).length <= 0){
+                reject('notObj')
+            }else{
+                const saveEraserResponse = await saveEraser(obj,id)
+                resolve(saveEraserResponse)
+            }
+        } catch (e) {
+            reject(e)
+        }
+/*         if(id === undefined || id === null || id === '' ){
             reject('notUser')
         }else{
             if(Object.keys(obj).length <= 0){
@@ -28,7 +37,7 @@ function controller(id,obj){
                     })
                     .catch(e => reject(e))
             }
-        }
+        } */
     })
 }
 module.exports = controller

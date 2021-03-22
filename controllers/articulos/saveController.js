@@ -1,7 +1,22 @@
 const { saveArticle } = require('./../../model/articlesModel')
 function controller(id,obj,ip){
-    return new Promise((resolve, reject) => {
-        if(id === undefined || id === null || id === ''){
+    return new Promise(async(resolve, reject) => {
+        try {
+            if(Object.keys(obj).length <= 0){
+                reject('notObj')
+            }else{
+                const data = {
+                    ...obj,
+                    creadorId:id,
+                    ip
+                }
+                const saveArticleResponse = await saveArticle(data)
+                resolve(saveArticleResponse)
+            }
+        } catch (e) {
+            reject(e)
+        }
+/*         if(id === undefined || id === null || id === ''){
             reject('dataNull')
         }else{
             if(Object.keys(obj).length <= 0){
@@ -20,7 +35,7 @@ function controller(id,obj,ip){
                         reject(e)
                     })
             }
-        }
+        } */
     })
 }
 

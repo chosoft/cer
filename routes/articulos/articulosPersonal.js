@@ -10,7 +10,8 @@ router.get('/', async (req,res) => {
             res.redirect('/loguearse')
         }
         const controllerResponse = await controller(id)
-        res.render('articulos',{perfilData:controllerResponse.dataRender,articulos:controllerResponse.articles})
+        const articles = controllerResponse.articles.lenght >= 0 ? controllerResponse.articles : 'nulos'
+        res.render('articulos',{perfilData:controllerResponse.dataRender,articulos:articles})
     }catch(e){
         console.log(e)
         res.send(e)        

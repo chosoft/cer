@@ -29,10 +29,10 @@ html(lang="es")
                                 button(class="editUserBtn" keyChange=`${id}`) Editar
                             div(class="wp-placeData")
                                 img(class="iconDataPlace" src="/icons/envelope.svg" alt="mail icon")
-                                span= dataVariable[0]
+                                span= perfilUserData[0]
                             div(class="wp-placeData")
                                 img(class="iconDataPlace" src="/icons/calendar.svg" alt="date icon")
-                                span= `${dataVariable[1].getDay()}/${dataVariable[1].getMonth()+1}/${dataVariable[1].getFullYear()}`
+                                span= `${perfilUserData[1].getDay()}/${perfilUserData[1].getMonth()+1}/${perfilUserData[1].getFullYear()}`
                         
                         div(class="blockData")
                             .wp-titleChange

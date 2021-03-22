@@ -18,7 +18,10 @@ html(lang="es")
                 div(class="title-wp")
                     h1 Mis articulos
                 div(class="leaf")
-
+                    if articles === 'nulos'
+                        p articulos nulos
+                    else 
+                        p articles 
         section(class="selectRetrieveDoc") 
             section(class="selector")
             section(class="selectorVideo")

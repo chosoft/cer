@@ -1,24 +1,13 @@
 const { dataUser,dataPerfil } = require('./../../model/usersModel')
+
 function controller(id){
-    return new Promise((resolve, reject) => {
-        if(id === '' || id === null || id === undefined){
-            reject('notUser')
-        }else{
-            dataUser(id)
-                .then(dataRender => {
-                    if(Array.isArray(dataRender) && dataRender.length >= 3 ){
-                        dataPerfil(id)
-                            .then(dataPerfil => {
-                                resolve([dataRender,dataPerfil])
-                            })
-                            .catch(e => reject(e))
-                    }else{
-                        reject('notUser')
-                    }
-                })
-                .catch(e => {
-                    reject(e)
-                })
+    return new Promise(async (resolve, reject) => {
+        try {
+            const perfilData = await dataUser(id)
+            const perfilUserData = await dataPerfil(id)
+            resolve({perfilData, perfilUserData})
+        } catch (e) {
+            reject(e)
         }
     })
 }

@@ -3,11 +3,23 @@ const router = express.Router()
 
 const controller = require('./../../controllers/articulos/changeVisibility')
 
-const errorManager = require('./../../utils/errors/typeError')
+const checker = require('./../../utils/auth/userVerify')
+
+const managerError = require('./../../utils/errors/typeError')
 const arrayError = ['notUser','notKey','notVisibility']
 
-router.put('/', (req, res) => {
-    if(req.session.idUserLog === undefined || req.session.idUserLog === null || req.session.idUserLog === ''){
+router.put('/',checker,async (req, res) => {
+    try {
+        const id = req.body.id ? req.body.id : 'nulo'
+        const visibility = req.body.visibility ? req.body.visibility : false
+        const controllerResponse = await controller(id,visibility)
+        res.send(controllerResponse)
+    } catch (e) {
+        const errorLog = managerError(e,arrayError)
+        delete e 
+        res.send(errorLog)
+    }
+/*     if(req.session.idUserLog === undefined || req.session.idUserLog === null || req.session.idUserLog === ''){
         res.send('notUser')
     }else{
         if(Object.keys(req.body).length <= 0){
@@ -26,6 +38,6 @@ router.put('/', (req, res) => {
                     res.send(errorMessage)
                 })
         }
-    }
+    } */
 })
 module.exports = router
