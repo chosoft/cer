@@ -1,9 +1,30 @@
 const { dataUser,changeImgUser } = require('./../../model/usersModel')
-const upload = require('./../../config/imgMulter')
-const fileUp = upload.single('myFiles')
+const pathUserImg = 'profileImg/'
+//const upload = require('./../../config/imgMulter')
+//const fileUp = upload.single('myFiles')
 const deleterFile = require('./../../utils/fileManager/deleteDoc')
-function controller(id,req,res){
-    return new Promise((resolve,reject) => {
+function controller(id,file){
+    return new Promise(async(resolve, reject) => {
+        try {
+            if(file === 'nulo'){
+                reject('fileNull')
+            }else{
+                let actualImgUser = await dataUser(id)[2]          
+                if(actualImgUser === 'profileImg/doe.svg'){
+                    const changerImgPlaceResponse = await changeImgUser(id,`${pathUserImg}${file.filename}`)
+                    resolve(changerImgPlaceResponse)
+                }else{
+                    const imgToDelete = actualImgUser.substring(actualImgUser.indexOf('/')+1)
+                    const deleterImgResponse = await deleterFile(`${pathUserImg}${imgToDelete}`)
+                    const changerImgPlaceResponse = await changeImgUser(id,`${pathUserImg}${filename}`)
+                    resolve(changerImgPlaceResponse)
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+    /* return new Promise((resolve,reject) => {
         if(Object.keys(req).length <= 0 || Object.keys(res).length <= 0){
             reject('someDataNull') 
         }else{
@@ -50,7 +71,7 @@ function controller(id,req,res){
                     }
                 })
         }
-    })
+    }) */
 }
 
 module.exports = controller

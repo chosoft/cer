@@ -39,9 +39,9 @@ html(lang="es")
                                 h3 Cambiar contraseñas
                             .wp-blockChange
                                 label(for="pass1") Nueva contraseña
-                                input(class="passwordInput" id="pass1" placeholder="Nueva contraseña")
+                                input(type="password" class="passwordInput" id="pass1" placeholder="Nueva contraseña")
                                 label(for="pass2") Nueva contraseña(nuevamente)
-                                input(class="passwordInput" id="pass2" placeholder="Nueva contraseña(nuevamente)")
+                                input(type="password" class="passwordInput" id="pass2" placeholder="Nueva contraseña(nuevamente)")
                                 button(id="sendPasswords" keyChange=`${id}`) Enviar
 
         script(src="js/axios.min.js" type="text/javascript")
