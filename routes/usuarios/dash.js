@@ -10,11 +10,15 @@ router.get('/',checker,async (req,res) => {
     try {
         const id = req.session.idUserLog 
         const controllerResponse = await dashController(id)
-        const articles = controllerResponse.arts.reverse()
+        const articles = controllerResponse.arts
         if(articles.length <= 0 ){
             res.render('dash',{perfilData: controllerResponse.perfilData,arts:'nulos',title:'Panel - Blog',id})
         }else{
-            res.render('dash',{perfilData: controllerResponse.perfilData,arts:articles,title:'Panel - Blog',id})
+            let sortedArticles = []
+            articles.forEach(article => {
+                sortedArticles.unshift(article)
+            })
+            res.render('dash',{perfilData: controllerResponse.perfilData,arts:sortedArticles,title:'Panel - Blog',id})
         }
     } catch (e) {
         delete e

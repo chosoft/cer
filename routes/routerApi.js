@@ -13,24 +13,30 @@ const apiChangeUserName = require('./usuarios/logic/apiChangeUserName')
 const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
 const apiChangePassword = require('./usuarios/logic/apiChangePassword')
 const apiSaveUserArticle = require('./articulos/apiSaveArticle.js')
+const apiGetArticle = require('./articulos/getArticles')
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
 const router = function(server){
     //Api routes
-    server.use('/api/uploadDoc',apiUpload)
-    server.use('/api/deleteDoc',apiDeleteDoc)
-    server.use('/api/changeDocVisibility',apiChangeDocVisibility)
-    server.use('/api/registro',apiRegister)
+    //OTHERS APIS FUNC
     server.use('/api/login',apiLogin)
+    server.use('/api/registro',apiRegister)
     server.use('/api/retrieve',apiRetrieve)
+    server.use('/api/getArticles',apiGetArticle)
+    //SAVE APIS FUNC
     server.use('/api/eraserSave',apiSaveEraser)
+    server.use('/api/saveUserArticle',apiSaveUserArticle)
+    server.use('/api/uploadDoc',apiUpload)
     server.use('/api/saveArticle',apiSaveArticle)
-    server.use('/api/deleteArticle',apiDeleteArticle)
+    //CHANGE APIS FUNC
+    server.use('/api/changeDocVisibility',apiChangeDocVisibility)
     server.use('/api/changeVisibleArticle',apiChangeVisibleArticle)
     server.use('/api/changeUserName',apiChangeUserName)
     server.use('/api/changeImgProfile',apiChangeImgProfile)
     server.use('/api/changeUserPassword',apiChangePassword)
-    server.use('/api/saveUserArticle',apiSaveUserArticle)
+    //DELETE APIS FUNC
+    server.use('/api/deleteArticle',apiDeleteArticle)
+    server.use('/api/deleteDoc',apiDeleteDoc)
     //User routes
     server.use('/users/logout',logout)
 }

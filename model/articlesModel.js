@@ -1,6 +1,5 @@
 //Modules
 const mongoose = require('mongoose')
-const { all } = require('../routes/index')
 const { Schema,model } = mongoose
 const { dataArticle } = require('./usersModel')
 //Schema of the model
@@ -36,7 +35,7 @@ const MyArticle = new model('ArticuloUser',myArticlesSchema)
 function getAllArcticles(){
     return new Promise((resolve, reject) => {
         //Find all the articles
-        Articulo.find({},function(err,articles){
+        Articulo.find({}).sort({date:-1}).exec(function(err,articles){
             if(err){
                 reject(err)
             }else if(articles === null || articles.length <= 0){

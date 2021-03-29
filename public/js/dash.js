@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     //ADD ARTICLE EVENTS ANDS FUNCTIONS
     
     //Open Modal to write the article
@@ -136,7 +135,6 @@ $(document).ready(function(){
                                                     title: 'Parrafo donde se añadira el enlace',
                                                     input: 'select',
                                                     inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},
-                                                    inputPlaceholder: 'Selecciona parrafo',
                                                 }
                                                 ])        
                 if(paragraph > divs){
@@ -188,7 +186,6 @@ $(document).ready(function(){
                                                                 5:'Parrafo 5'
                                                             }
                                                         },
-                                                        inputPlaceholder: 'Selecciona parrafo',
                                                     }
                                                     ])        
                 if(paragraph > divs){
@@ -220,28 +217,59 @@ $(document).ready(function(){
                 const optionsSelect = {'Imagen':{link: 'Link',add: 'Añadir',yetUp: 'Imagen de Documentos'}}
                 const { value: modeToAdd } = await Swal.fire({title: 'Añadir la imagen',text: 'Como quiere añadir la imagen',input: 'select',inputOptions: optionsSelect,inputPlaceholder: 'Selecciona como quieres añadir la imagen'})
                 if(modeToAdd ===  'link'){
-                    const { value: linkImg,paragraph} = await Swal.mixin({
+                    const { value: [linkImg,paragraph]} = await Swal.mixin({
                                                         showCancelButton: true,
                                                         progressSteps: ['1', '2']
                                                         }).queue([{title: 'Link de la imagen',input: 'text',text: 'Direccion del enlace',inputPlaceholder: 'Link',},
                                                         {title: 'Parrafo donde se añadira el enlace',input: 'select',
-                                                        inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},inputPlaceholder: 'Selecciona parrafo',}
+                                                        inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},}
                                                         ])
                     
                     if(paragraph > divs){
                         let position = arrayData.length - 1
                         let child = $(`#${arrayData[position]}`).children()[0].id
-                        $(`#${child}`).append(`<img src="${linkImg}">&nbsp`)
+                        let imgYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
+
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'IMG'){
+                                imgYet = true
+                            }else{
+
+                            }
+                        })
+                        if(imgYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<img src="${linkImg}">&nbsp`)
+                        }
                     }else{
                         let child = $(`#${arrayData[paragraph-1]}`).children()[0].id
-                        $(`#${child}`).append(`<img src="${linkImg}">&nbsp`)
+                        let imgYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
+
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'IMG'){
+                                imgYet = true
+                            }else{
+
+                            }
+                        })
+                        if(imgYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<img src="${linkImg}">&nbsp`)
+                        }
                     }
                 }else if(modeToAdd === 'add'){
                     const { value:[file,paragraph]} = await Swal.mixin({showCancelButton: true,progressSteps: ['1', '2', '3']})
                                                     .queue([{title: 'Añade la imagen',input: 'file',inputAttributes:{'accept': 'image/*','multiple': false}},                                                    
                                                     {title: 'Parrafo donde se añadira la imagen',input: 'select',
-                                                    inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},
-                                                    inputPlaceholder: 'Selecciona parrafo',}])
+                                                    inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},}])
                     const formData = new FormData()
                     formData.append('myFiles',file[0])
                     $('.loaderUpFile').css('display','flex')
@@ -268,14 +296,46 @@ $(document).ready(function(){
                     if(paragraph > divs){
                         let position = arrayData.length - 1
                         let child = $(`#${arrayData[position]}`).children()[0].id
-                        $(`#${child}`).append(`<img src="${apiResponse}">&nbsp`)
-                    }else{
-                        let child = $(`#${arrayData[paragraph-1]}`).children()[0].id
-                        $(`#${child}`).append(`<img src="/${apiResponse}">&nbsp`)
-                    }
-                }else{
-                    const { data:docs } = await axios.post('/api/retrieve/image',{})
+                        let imgYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
 
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'IMG'){
+                                imgYet = true
+                            }else{
+
+                            }
+                        })
+                        if(imgYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<img src="${apiResponse}">&nbsp`)
+                        }
+                    }else{
+                        let child = $(`#${arrayData[paragraph-1]}`).children()[0].id    
+                        let imgYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
+
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'IMG'){
+                                imgYet = true
+                            }else{
+
+                            }
+                        })
+                        if(imgYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<img src="/${apiResponse}">&nbsp`)
+                        }
+                    }
+                }else if(modeToAdd === 'yetUp'){
+                    const { data:docs } = await axios.post('/api/retrieve/image',{})
+                    console.log(docs)
                     if(docs === 'nulos'){
                         Swal.fire({title: 'Imagenes no encontradas',text: 'No se han encontrado imagenes en los documentos guardados',icon: 'warning'})
                     }else{
@@ -290,6 +350,8 @@ $(document).ready(function(){
                         $('.selector').css('display','flex')
                         $('.selector').html(insert)
                     }
+                }else{
+
                 }
             }
         } catch (e) {
@@ -310,15 +372,16 @@ $(document).ready(function(){
                 for (let i = 0; i < divs; i++){
                     arrayData.push($('.wp-leafis').children()[i].id)
                 }
-                const { value:modeToAdd } = Swal.fire({title: 'Añadir video',text: 'Elige como añadiras el video',input: 'select',
-                                                    inputOptions:{youtube: 'Youtube',addVideo: 'Añadir',docs: 'Video de Documentos'}})
+                const { value:modeToAdd } = await Swal.fire({title: 'Añadir video',text: 'Elige como añadiras el video',input: 'select',
+                                                    inputOptions:{addVideo: 'Añadir',docs: 'Video de Documentos'}})
+                console.log(modeToAdd)
                 if(modeToAdd === 'youtube'){
                     const { value: [iframe,paragraph] } = await Swal.mixin({showCancelButton: true,progressSteps: ['1', '2', '3']})
                                                         .queue([{title: 'Iframe del video',input: 'text',text: 'Video embebido de youtube',inputPlaceholder: 'Texto copiado de Youtube',},
                                                         {
                                                             title: 'Parrafo donde se añadira el video',input: 'select',
                                                             inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},
-                                                            inputPlaceholder: 'Selecciona parrafo',}])
+                                                            }])
                     if(paragraph > divs){
                         let position = arrayData.length - 1
                         let child = $(`#${arrayData[position]}`).children()[0].id
@@ -333,7 +396,7 @@ $(document).ready(function(){
                                                         inputAttributes:{'accept': 'video/*',multiple: false}},
                                                         {title: 'Parrafo donde se añadira el video',input: 'select',
                                                         inputOptions:{'Parrafos':{1:'Parrafo 1',2:'Parrafo 2',3:'Parrafo 3',4:'Parrafo 4',5:'Parrafo 5'}},
-                                                        inputPlaceholder: 'Selecciona parrafo',}])
+                                                        }])
                     const formData = new FormData()
                     formData.append('myFiles',file[0])
                     $('.loaderUpFile').css('display','flex')
@@ -368,18 +431,51 @@ $(document).ready(function(){
                     if(paragraph > divs){
                         let position = arrayData.length - 1
                         let child = $(`#${arrayData[position]}`).children()[0].id
-                        $(`#${child}`).append(`<video width="320" height="240" controls>
-                        <source src="/${apiResponse}" type="video/${typeOfVideo}">
-                      </video> &nbsp`)
+                        let videoYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
+
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'VIDEO'){
+                                videoYet = true
+                            }else{
+
+                            }
+                        })
+                        if(videoYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene un video, recuerda que solo puedes tener una video por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<video width="320" height="240" controls>
+                            <source src="/${apiResponse}" type="video/${typeOfVideo}">
+                          </video> &nbsp`)
+                        }
     
                     }else{
                         let child = $(`#${arrayData[paragraph-1]}`).children()[0].id
-                        $(`#${child}`).append(`<video width="320" height="240" controls>
-                        <source src="/${apiResponse}" type="video/${typeOfVideo}">
-                      </video> &nbsp`)
+                        let videoYet = false
+                        let childParagraph = Object.values($(`#${child}`).children())
+                        childParagraph.pop()
+                        childParagraph.pop()
+
+                        childParagraph.forEach(tag => {
+                            if(tag.tagName === 'VIDEO'){
+                                videoYet = true
+                            }else{
+
+                            }
+                        })
+                        if(videoYet){
+                            Swal.fire({title:'!Ey',text:'Este parrafo ya tiene un video, recuerda que solo puedes tener una video por parrafo',icon: 'info'})
+                        }else{
+                            $(`#${child}`).append(`<video width="320" height="240" controls>
+                            <source src="/${apiResponse}" type="video/${typeOfVideo}">
+                          </video> &nbsp`)
+                        }
+    
                     }
 
-                }else{
+                }else if(modeToAdd === 'docs'){
                     const {data: docs} = await axios.post('/api/retrieve/video',{})
                     if(docs === 'nulos'){
                         Swal.fire({title: 'Videos no encontrados',text: 'No se han encontrado videos en los documentos guardados',icon: 'warning'})
@@ -404,50 +500,13 @@ $(document).ready(function(){
                      rel="noopenner norefer"}else{
                         window.location = '/loguearse'
                     }
-                }
+                }else{}
             }
             
         } catch (e) {
             
         }
     })
-    //Save Erasers
-/*     $('#saveEraser').click(function(e){
-        e.preventDefault()
-        let divs = $('.wp-leafis').children().length
-        if(divs <= 0){
-
-        }else{
-            const eraserGroup = window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
-            let allParagraphs = Object.values($('.wp-leafis').children())
-            const title = $('.wp-title')[0].textContent
-            allParagraphs.pop()
-            allParagraphs.pop()
-            let dataToSend = []
-            allParagraphs.forEach(element => {
-                dataToSend.push([element.attributes.typep.value,element.childNodes[1].innerHTML])
-            })
-            axios.post('/api/eraserSave',{title,group:eraserGroup,paragraphs: dataToSend})
-                .then((response) => {
-                    if(response.data === 'ok'){
-                        Swal.fire({
-                            title: 'Borrador guardado exitosamente',
-                            text: 'el borrador se ha guardado lo puedes editar en la seccion de Articulos',
-                            icon: 'success'
-                        })
-                    }else{
-                        Swal.fire({
-                            title:'Error',
-                            text: 'Ha ocurrido un errro a la hora de guardar este borrador'
-                        })
-                    }
-                })
-                .catch((e) => {
-                    console.log(e)
-                }) 
-
-        }
-    }) */
     //Save Articles
     $('.sender').click(async function(e){
         try {
@@ -466,14 +525,139 @@ $(document).ready(function(){
                     arrayParagraphs.push(innerReplaced)
                 })
                 const apiResponse = await axios.post('/api/saveArticle',{parrafos: arrayParagraphs,titulo:title})
-                console.log(apiResponse)
+                $('.addBlog').css('width','0%')
+                $('.addBlog').css('opacity','0')
+                $('.addBlog').css('width','0%')
+                $('.wp-title').text('Sin titulo')
+                $('.wp-leafis').empty()
                 Swal.fire({title: 'Bien Hecho',text: 'Se han guardado tus articulos',icon: 'success'})
+                getArticles()
             }
         } catch (e) {
             Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de guardar tu articulos',icon: 'error'})
         }
     })
+    $('body').on('click', '.selectRetrieveDoc .selector .imageInsert',async function(e){
+        try {
+            e.preventDefault()
+            $('.selectRetrieveDoc').css('display','none')
+            $('.selector').css('display','none')
+            const ruta = $(this).attr('ruta')
+            const optionsSelect = {'Parrafos':{ 1: 'Parrafo 1',2: 'Parrafo 2',3: 'Parrafo 3',4: 'Parrafo 4',5: 'Parrafo 5',}}
+            const { value: parrafo } = await Swal.fire({title: 'Parrafo',text:'Selecciona el parrafo donde se insertara la imagen',input:'select',inputOptions:optionsSelect})
+            let divs = $('.wp-leafis').children().length
+            let arrayData = []
+            for (let i = 0; i < divs; i++){
+                arrayData.push($('.wp-leafis').children()[i].id)
+            }
+            if(parrafo > divs){
+                
+                let position = arrayData.length - 1
+                let child = $(`#${arrayData[position]}`).children()[0].id
+                let imgYet = false
+                let childParagraph = Object.values($(`#${child}`).children())
+                childParagraph.pop()
+                childParagraph.pop()
 
+                childParagraph.forEach(tag => {
+                    if(tag.tagName === 'IMG'){
+                        imgYet = true
+                    }else{
+
+                    }
+                })
+                if(imgYet){
+                    Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                }else{
+                    $(`#${child}`).append(`<img src="/${element.ruta}">&nbsp`)
+                }
+
+            }else{
+                let child = $(`#${arrayData[parrafo-1]}`).children()[0].id
+                let imgYet = false
+                let childParagraph = Object.values($(`#${child}`).children())
+                childParagraph.pop()
+                childParagraph.pop()
+
+                childParagraph.forEach(tag => {
+                    if(tag.tagName === 'IMG'){
+                        imgYet = true
+                    }else{
+
+                    }
+                })
+                if(imgYet){
+                    Swal.fire({title:'!Ey',text:'Este parrafo ya tiene una imagen, recuerda que solo puedes tener una imagen por parrafo',icon: 'info'})
+                }else{
+                    $(`#${child}`).append(`<img src="/${ruta}">&nbsp`)
+                }
+            }
+
+        } catch (e) {
+            Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de insertar la imagen o selecionar el parrafo ',icon:'error'})
+        }
+    })
+    $('body').on('click', '.selectRetrieveDoc .selectorVideo .videoInsert ',async function(e){
+        try {
+            e.preventDefault()
+            $('.selectRetrieveDoc').css('display','none')
+            $('.selectorVideo').css('display','none')
+            const optionsSelect = {'Parrafos':{ 1: 'Parrafo 1',2: 'Parrafo 2',3: 'Parrafo 3',4: 'Parrafo 4',5: 'Parrafo 5',}}
+
+            const ruta = $(this).attr('ruta')
+            const typeOfFile = ruta.substring(ruta.lastIndexOf('.')+1)
+            const {value: parrafo} = await Swal.fire({title: 'Parrafo',text:'Selecciona el parrafo donde se insertara la imagen',input:'select',inputOptions:optionsSelect})
+            let divs = $('.wp-leafis').children().length
+            let arrayData = []
+            for (let i = 0; i < divs; i++){
+                arrayData.push($('.wp-leafis').children()[i].id)
+            }
+            if(parrafo > divs){
+                let position = arrayData.length - 1
+                let child = $(`#${arrayData[position]}`).children()[0].id
+                let videoYet = false
+                let childParagraph = Object.values($(`#${child}`).children())
+                childParagraph.pop()
+                childParagraph.pop()
+
+                childParagraph.forEach(tag => {
+                    if(tag.tagName === 'VIDEO'){
+                        videoYet = true
+                    }else{
+
+                    }
+                })
+                if(videoYet){
+                    Swal.fire({title:'!Ey',text:'Este parrafo ya tiene un video, recuerda que solo puedes tener una video por parrafo',icon: 'info'})
+                }else{
+                    $(`#${child}`).append(`<video width="320" height="240" controls><source src="/${ruta}" type="video/${typeOfFile}"></video>&nbsp`)
+                }
+    
+
+            }else{
+                let child = $(`#${arrayData[parrafo-1]}`).children()[0].id
+                let videoYet = false
+                let childParagraph = Object.values($(`#${child}`).children())
+                childParagraph.pop()
+                childParagraph.pop()
+
+                childParagraph.forEach(tag => {
+                    if(tag.tagName === 'VIDEO'){
+                        videoYet = true
+                    }else{
+
+                    }
+                })
+                if(videoYet){
+                    Swal.fire({title:'!Ey',text:'Este parrafo ya tiene un video, recuerda que solo puedes tener una video por parrafo',icon: 'info'})
+                }else{
+                    $(`#${child}`).append(`<video width="320" height="240" controls><source src="/${ruta}" type="video/${typeOfFile}"></video>&nbsp`)
+                }
+            }
+        } catch (e) {
+            Swal.fire({title: 'Error',text:'Ha ocurrido un error para insertar el video',icon: 'error'})
+        }
+    })
     //PERFIL FUNCTIONS AND EVENTS
     
     //Change password
@@ -517,9 +701,7 @@ $(document).ready(function(){
             Swal.fire({title: 'Error al intentar cambiar tu nombre de usuario',text: 'Ha ocurrido un error al intentar cambiar tu nombre de usuario',icon: 'error'})
         }
     })
-
     //DOCS ALL EVENTS FUNCTIONS 
-
     //Modal Add doc
     $('#addDoc').click(function(e){
         e.preventDefault()
@@ -666,41 +848,11 @@ $(document).ready(function(){
             console.log(e)
         })
     })
-    
     $('.drop').on('dragleave', function(e){
         e.preventDefault()
         $(this).css({'transform':'scale(1)','border':'5px dashed #ccc'})
         return false
 
-    })
-
-
-    $('body').on('click', '.selectRetrieveDoc .selector .imageInsert',async function(e){
-        try {
-            e.preventDefault()
-            $('.selectRetrieveDoc').css('display','none')
-            $('.selectRetrieveDoc').css('display','none')
-            const ruta = $(this).attr('ruta')
-            const optionsSelect = {'Parrafos':{ 1: 'Parrafo 1',2: 'Parrafo 2',3: 'Parrafo 3',4: 'Parrafo 4',5: 'Parrafo 5',}}
-            const { value: parrafo } = await Swal.fire({title: 'Parrafo',text:'Selecciona el parrafo donde se insertara la imagen',input:'select',inputOptions:optionsSelect})
-            let divs = $('.wp-leafis').children().length
-            let arrayData = []
-            for (let i = 0; i < divs; i++){
-                arrayData.push($('.wp-leafis').children()[i].id)
-            }
-            if(parrafo > divs){
-                let position = arrayData.length - 1
-                let child = $(`#${arrayData[position]}`).children()[0].id
-                $(`#${child}`).append(`<img src="/${element.ruta}">&nbsp`)
-
-            }else{
-                let child = $(`#${arrayData[parrafo-1]}`).children()[0].id
-                $(`#${child}`).append(`<img src="/${ruta}">&nbsp`)
-            }
-
-        } catch (e) {
-            Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de insertar la imagen o selecionar el parrafo ',icon:'error'})
-        }
     })
     $('body').on('click', '.wp-division .wp-content .leaf .wp-allArticles .wp-article .wp-actions .visibleArticleBtn', async function(e){
         try {
@@ -725,42 +877,16 @@ $(document).ready(function(){
         try {
             e.preventDefault()
             const deleterKey = $(this).attr('deleterKey')
-            const { isConfirmed:confirmed } = await Swal.fire({title: 'Cuidado!',text:'Si eliminas este articulo no podras recuperlarlo ',icon: 'Warning',showCancelButton: true})
+            const { isConfirmed:confirmed } = await Swal.fire({title: 'Cuidado!',text:'Si eliminas este articulo no podras recuperlarlo ',icon: 'warning',showCancelButton: true})
             if(confirmed){
                 const apiResponse = await axios({url:'/api/deleteArticle',method: 'DELETE',data: {deleterKey}})
                 Swal.fire({title: 'Bien Hecho',text: 'El articulo ha sido eliminado con exito ',icon:'success'})
-
+                getArticles()
             }else{
 
             }
         } catch (e) {
             Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de borrar el articulo ',icon: 'error'})
-        }
-    })
-    $('body').on('click', '.selectRetrieveDoc .selectorVideo .videoInsert ',async function(e){
-        try {
-            e.preventDefault()
-            $('.selectRetrieveDoc').css('display','none')
-            $('.selectorVideo').css('display','none')
-            const ruta = $(this).attr('ruta')
-            const typeOfFile = ruta.substring(ruta.lastIndexOf('.')+1)
-            const {value: parrafo} = await Swal.fire({title: 'Cambiar'})
-            let divs = $('.wp-leafis').children().length
-            let arrayData = []
-            for (let i = 0; i < divs; i++){
-                arrayData.push($('.wp-leafis').children()[i].id)
-            }
-            if(parrafo > divs){
-                let position = arrayData.length - 1
-                let child = $(`#${arrayData[position]}`).children()[0].id
-                $(`#${child}`).append(`<video width="320" height="240" controls><source src="/${ruta}" type="video/${typeOfFile}"></video>&nbsp`)
-
-            }else{
-                let child = $(`#${arrayData[parrafo-1]}`).children()[0].id
-                $(`#${child}`).append(`<video width="320" height="240" controls><source src="/${ruta}" type="video/${typeOfFile}"></video>&nbsp`)
-            }
-        } catch (e) {
-            Swal.fire({title: 'Error',text:'Ha ocurrido un error para insertar el video',icon: 'error'})
         }
     })
 
@@ -846,13 +972,6 @@ $(document).ready(function(){
         }) */
         
     })
-
-
-    
-
-
-
-
     function putData(){
         let toFilter = window.location.search
         let filter = toFilter.substring(toFilter.lastIndexOf('=')+1)
@@ -920,5 +1039,144 @@ $(document).ready(function(){
                 icon: 'error'
             })
         })
+    }
+    async function getArticles(){
+        try {
+            const {data: [articles,role,id]} = await axios({url:"/api/getArticles",method:"POST"})
+            console.log(articles,role,id)
+            if(articles === 'nulos'){
+                const layout = `<div class="empty-title">
+                                    <h1>Parece que no tienes ningun articulo </h1>
+                                </div>
+                                <div class="empty-message">
+                                    <p>Para añadir un nuevo articulo al blog de CER dale click al boton de mas </p>
+                                </div>
+                                <div class="empty-img"><img src="icons/empty-blog.svg" alt="imagen vacios" /></div>`
+                $('.leaf').html(layout)
+            }else{
+                $('.leaf').html(`<div class="wp-allArticles"></div>`)
+                let content = ``
+                let paragraphsContent = ``
+                articles.forEach(({titulo,visible,parrafos,creadorId,usernameCreator,imgCreator,_id}) => {
+                    paragraphsContent = ``
+                    if(role === 'admin' || JSON.stringify(id) === JSON.stringify(creadorId)){
+                        if(visible){
+                            parrafos.forEach(parrafo => {
+                                paragraphsContent += `<div class="parrafos">
+                                                        <div class="parrafoArticle">
+                                                            ${parrafo}
+                                                        </div>
+                                                    </div>`
+                            })
+                            content += `<div class="wp-article">
+                                            <div class="header">
+                                                <h3>${titulo}</h3>
+                                                <div class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right">
+                                                    <img src="/icons/eye(1).svg" alt="Visible" />
+                                                </div>
+                                            </div>
+                                            ${paragraphsContent}
+                                            <div class="wp-actions">
+                                                <button class="visibleArticleBtn" changerKey="${_id}">
+                                                    <img src="/icons/dots.svg">
+                                                </button>
+                                                <div class="wp-creathorThumbnail">
+                                                    <img src="/${imgCreator}">
+                                                    <span>${usernameCreator}</span>
+                                                </div>
+                                                <button class="deleteArticlebtn" deleterKey="${_id}">
+                                                    <img src="/icons/delete.svg">
+                                                    <span>Eliminar</span>
+                                                </button>
+                                            </div>
+                                        </div>`
+
+                        }else{
+                            parrafos.forEach(parrafo => {
+                                paragraphsContent += `<div class="parrafos">
+                                                        <div class="parrafoArticle">
+                                                            ${parrafo}
+                                                        </div>
+                                                    </div>`
+                            })
+                            content += `<div class="wp-article">
+                                            <div class="header">
+                                                <h3>${titulo}</h3>
+                                                <div class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right">
+                                                    <img src="/icons/hide.svg" alt="Hide" />
+                                                </div>
+                                            </div>
+                                            ${paragraphsContent}
+                                            <div class="wp-actions">
+                                                <button class="visibleArticleBtn" changerKey="${_id}">
+                                                    <img src="/icons/dots.svg">
+                                                </button>
+                                                <div class="wp-creathorThumbnail">
+                                                    <img src="/${imgCreator}">
+                                                    <span>${usernameCreator}</span>
+                                                </div>
+                                                <button class="deleteArticlebtn" deleterKey="${_id}">
+                                                    <img src="/icons/delete.svg">
+                                                    <span>Eliminar</span>
+                                                </button>
+                                            </div>
+                                        </div>`
+                        }
+                    }else{
+                        if(visible){
+                            parrafos.forEach(parrafo => {
+                                paragraphsContent += `<div class="parrafos">
+                                                        <div class="parrafoArticle">
+                                                            ${parrafo}
+                                                        </div>
+                                                    </div>`
+                            })
+                            content += `<div class="wp-article">
+                                            <div class="header">
+                                                <h3>${titulo}</h3>
+                                                <div class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right">
+                                                    <img src="/icons/hide.svg" alt="Hide" />
+                                                </div>
+                                            </div>
+                                            ${paragraphsContent}
+                                            <div class="wp-actions">
+                                                <div class="wp-creathorThumbnail">
+                                                    <img src="/${imgCreator}">
+                                                    <span>${usernameCreator}</span>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        }else{
+                            parrafos.forEach(parrafo => {
+                                paragraphsContent += `<div class="parrafos">
+                                                        <div class="parrafoArticle">
+                                                            ${parrafo}
+                                                        </div>
+                                                    </div>`
+                            })
+                            content += `<div class="wp-article">
+                                            <div class="header">
+                                                <h3>${titulo}</h3>
+                                                <div class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right">
+                                                    <img src="/icons/eye(1).svg" alt="Visible" />
+                                                </div>
+                                            </div>
+                                            ${paragraphsContent}
+                                            <div class="wp-actions">
+                                                <div class="wp-creathorThumbnail">
+                                                    <img src="/${imgCreator}">
+                                                    <span>${usernameCreator}</span>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        }
+                    }
+                })
+                console.log(content)
+                $('.wp-allArticles').html(content)
+            }
+        } catch (e) {
+            Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de traer la lista de articulos actualizados',icon:'error'})
+        }
     }
 })

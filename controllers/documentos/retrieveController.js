@@ -1,8 +1,7 @@
 //Modules 
-const { dataUser } = require('./../../model/usersModel')
 const { filterDocs } = require('./../../model/documentModel')
 //Controller function
-function controller(type='image'){
+function controller(type){
     return new Promise(async (resolve, reject) => {
         try {
            const filterDocsResponse = await filterDocs(type) 

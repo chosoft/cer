@@ -15,7 +15,7 @@ router.post('/:type',checker,async (req,res) => {
     try {
         const type = (req.params.type === 'image' || req.params.type === 'video') ? req.params.type : 'image'
         const mode = (type === 'video') ? 'vid' : type
-        const controllerResponse = await controller(id,mode)
+        const controllerResponse = await controller(mode)
         if(controllerResponse === 'nulos'){
             res.send('nulos')
         }else{
