@@ -1,4 +1,35 @@
-h1 HOME
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Home - CER
+        link(rel="shortcut icon", href="/icons/favicon.png", type="image/x-icon")
+        link(href="https://fonts.googleapis.com/css2?family=Lato&family=Oxygen:wght@400;700&display=swap" rel="stylesheet") 
+        link(href="/css/index.css" rel="stylesheet") 
+        link(href="/css/home.css" rel="stylesheet") 
+    body
+        include layout/header.pug
+        section(class="banner")
+            .wp-contentBanner 
+                h1 Bienvenidos al comite de etica y religion del colegio americano 
+                img(src="/icons/colamer-2.svg" alt="logo-colamer")  
 
-script(src="/socket.io/socket.io.js")
-script(src="js/home.js")
+        section(class="wp-info")
+            .wp-slider
+                button(class="toggleBtnSlide" tl="less")
+                .wp-imgs
+                    img(src="/assets/img.jpg" class="imgSlide view")
+                    img(src="/assets/img2.jpg" class="imgSlide hide")
+                    img(src="/assets/img3.png" class="imgSlide hide") 
+
+                button(class="toggleBtnSlide" tl="plus")
+                    
+
+        script(src="/js/axios.min.js")
+        script(src="/js/sweetalert2.js")
+        script(src="/js/jquery.min.js")
+        script(src="/js/particles.min.js")
+        script(src="/js/glide.js")
+        script(src="/js/home.js")

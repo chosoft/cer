@@ -1,24 +1,22 @@
-'use strict'
-
-const buttonsToggle = document.querySelectorAll('.toggle')
-
-buttonsToggle.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        let inputToToggle = document.querySelector('#'+button.attributes[1].value)
-        console.log(inputToToggle)
-        let iconView = button.children[0].id
-        let iconHide = button.children[1].id
-        if(inputToToggle.attributes[1].value === 'password'){
-            inputToToggle.setAttribute('type','text')
-            document.querySelector(`#${iconView}`).style.display = 'none'
-            document.querySelector(`#${iconHide}`).style.display = 'block'
+$(document).ready(function(){
+    let actualSlide = 0
+    $('.toggleBtnSlide').click(() => {
+        console.log($(this).attr('tl'))
+        const action = ($(this).attr('tl') === 'plus') ? 1 : -1;
+        const slides = Object.values($('.wp-imgs').children())
+        slides.pop()
+        slides.pop()
+        console.log(action, actualSlide)
+        if(actualSlide + action < 0){
+            $($('.wp-imgs').children()[actualSlide]).removeClass('view').addClass('hide')
+            $($('.wp-imgs').children()[slides.length-1]).removeClass('hide').addClass('view')
+        }else if(actualSlide + action > slides.length-1){
+            $($('.wp-imgs').children()[actualSlide]).removeClass('view').addClass('hide')
+            $($('.wp-imgs').children()[0]).removeClass('hide').addClass('view')
         }else{
-            inputToToggle.setAttribute('type','password')
-            document.querySelector(`#${iconView}`).style.display = 'block'
-            document.querySelector(`#${iconHide}`).style.display = 'none'
+            $($('.wp-imgs').children()[actualSlide]).removeClass('view').addClass('hide')
+            $($('.wp-imgs').children()[actualSlide+action]).removeClass('hide').addClass('view')
+            actualSlide += action
         }
     })
 })
-
-
