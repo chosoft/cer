@@ -8,7 +8,9 @@ const apiRetrieve = require('./documentos/logica/apiRetrieve')
 const apiSaveEraser = require('./articulos/saveEraser')
 const apiSaveArticle = require('./articulos/saveArticle')
 const apiDeleteArticle = require('./articulos/deleteArticle')
+const apiDeleteArticleUser = require('./articulos/deleteArticleUser')
 const apiChangeVisibleArticle = require('./articulos/changeVisibility')
+const apiChangeVisibleArticleUser = require('./articulos/changeVisibilityUser')
 const apiChangeUserName = require('./usuarios/logic/apiChangeUserName')
 const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
 const apiChangePassword = require('./usuarios/logic/apiChangePassword')
@@ -31,11 +33,13 @@ const router = function(server){
     //CHANGE APIS FUNC
     server.use('/api/changeDocVisibility',apiChangeDocVisibility)
     server.use('/api/changeVisibleArticle',apiChangeVisibleArticle)
+    server.use('/api/changeVisibleArticleUser',apiChangeVisibleArticleUser)
     server.use('/api/changeUserName',apiChangeUserName)
     server.use('/api/changeImgProfile',apiChangeImgProfile)
     server.use('/api/changeUserPassword',apiChangePassword)
     //DELETE APIS FUNC
     server.use('/api/deleteArticle',apiDeleteArticle)
+    server.use('/api/deleteArticleUser',apiDeleteArticleUser)
     server.use('/api/deleteDoc',apiDeleteDoc)
     //User routes
     server.use('/users/logout',logout)

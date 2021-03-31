@@ -19,31 +19,26 @@ router.get('/',checker, async (req,res) => {
             const controllerAllResponse = await  controller(id)
             res.render('docs',{...controllerAllResponse,title:'Docs'})
         }else{
-            const controllerFilterResponse = await filterController(id,query)
+            const controllerFilterResponse = await filterController(id,query,true)
             res.render('docsFilter',{...controllerFilterResponse,title:'Documentos',group:query})
         }
     }catch(e){
+        const errorLog = managerError(e,arrayError)
         delete e 
         res.redirect('/loguearse')
     }
 })
 
-router.post('/',(req,res)=>{
-    if(req.session.idUserLog === undefined){
-        res.send('errorLog')
-    }else{
-        const idUser = req.session.idUserLog
-        const toRetrieve = req.body.filter || 'documentos';
-        filterController(idUser,toRetrieve).then(data => {
-            if(data[1] === 'nulos'){
-                res.send(data[1])
-            }else{
-                res.send(data[1].reverse())
-            }
-        }).catch(e => {
-            delete e
-            res.send('errorRetrieve')
-        })
+router.post('/',checker,async (req,res)=>{
+    try {
+        const id = req.session.idUserLog
+        const toRetrieve = req.body.filter ? req.body.filter : 'documentos'
+        const controllerResponse = await filterController(id,toRetrieve,false)
+        res.send(controllerResponse)
+    } catch (e) {
+        const errorLog = managerError(e,arrayError)
+        delete e 
+        res.send(errorLog)
     }
 })
 

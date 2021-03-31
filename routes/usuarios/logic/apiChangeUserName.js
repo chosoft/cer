@@ -11,7 +11,12 @@ const arrayError = []
 router.post('/',checker,async (req,res) => {
     try {
         const id = req.session.idUserLog
-        
+        if(Object.keys(req.body).length <= 0){
+            res.send('userNameNull')
+        }else{
+            const controllerResponse = await controller(id,req.body.username)
+            res.send(controllerResponse)
+        }
     } catch (e) {
         const errorLog = managerError(e,arrayError)
         delete e 

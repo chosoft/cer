@@ -2,17 +2,22 @@ const express = require('express')
 const router = express.Router()
 
 const controller = require('./../../controllers/articulos/apiSaveUserArticle')
-router.post('/', async (req,res) => {
+
+const checker = require('./../../utils/auth/userVerify')
+
+const managerError = require('./../../utils/errors/typeError')
+const arrayError = []
+
+router.post('/',checker, async (req,res) => {
     try{
-        const id = req.session.idUserLog 
-    
-        if(id === '' || id === null || id === undefined){
-            res.send('notUser')
-        }
-    
-        const controllerResult = await controller(id,req.body)
+        const id = req.session.idUserLog
+        const ip = req.ip
+        const controllerResult = await controller(id,ip,req.body)
+        res.send(controllerResult)
     }catch(e){
-        res.send(e)
+        const errorLog = managerError(e,arrayError)
+        delete e
+        res.send(errorLog)
     }
 })
 

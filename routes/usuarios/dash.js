@@ -14,14 +14,14 @@ router.get('/',checker,async (req,res) => {
         if(articles.length <= 0 ){
             res.render('dash',{perfilData: controllerResponse.perfilData,arts:'nulos',title:'Panel - Blog',id})
         }else{
-            let sortedArticles = []
-            articles.forEach(article => {
-                sortedArticles.unshift(article)
+            articles.sort((a,b) => {
+                return new Date(b.date) - new Date(a.date)
             })
-            res.render('dash',{perfilData: controllerResponse.perfilData,arts:sortedArticles,title:'Panel - Blog',id})
+            res.render('dash',{perfilData: controllerResponse.perfilData,arts:articles,title:'Panel - Blog',id})
         }
     } catch (e) {
         delete e
+        console.log(e)
         res.redirect('/loguearse')
     }
 })

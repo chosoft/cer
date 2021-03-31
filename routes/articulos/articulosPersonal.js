@@ -2,24 +2,35 @@ const express = require('express')
 const router = express.Router()
 
 const controller = require('./../../controllers/articulos/viewController')
+const checker = require('./../../utils/auth/userVerify')
 
-router.get('/', async (req,res) => {
+const managerError = require('./../../utils/errors/typeError')
+const arrayError = []
+router.get('/',checker, async (req,res) => {
     try{
         const id = req.session.idUserLog
-        if(id === '' || id === undefined || id === null){
-            res.redirect('/loguearse')
-        }
-        const controllerResponse = await controller(id)
-        const articles = controllerResponse.articles.lenght >= 0 ? controllerResponse.articles : 'nulos'
-        res.render('articulos',{perfilData:controllerResponse.dataRender,articulos:articles})
+        const controllerResponse = await controller(id,true)
+        res.render('articulos',controllerResponse)
     }catch(e){
-        console.log(e)
-        res.send(e)        
+        const errorLog = managerError(e,arrayError)
+        console.error(e)
+        delete e
+        res.send(errorLog)        
     }
     
     
 })
 
-
+router.post('/',checker, async (req,res) => {
+    try {
+        const id = req.session.idUserLog
+        const controllerResponse = await controller(id,false)
+        res.send(controllerResponse)
+    } catch (e) {
+        const errorLog = managerError(e,arrayError)
+        delete e
+        res.send(errorLog)
+    }
+})
 module.exports = router 
 

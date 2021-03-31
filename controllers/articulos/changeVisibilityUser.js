@@ -5,7 +5,7 @@ function controller(keyChange,visibility) {
             if(keyChange === 'nulo'){
                 reject('notChangeKey')
             }else{
-                const changeVisibilityResponse = await changeVisibility(keyChange,visibility)
+                const changeVisibilityResponse = await changeVisibilityUser(keyChange,visibility)
                 resolve(changeVisibilityResponse)
             }
         } catch (e) {

@@ -524,7 +524,7 @@ $(document).ready(function(){
                     innerReplaced = paragraph.children[0].innerHTML.replace((new RegExp("\s"),"\\s"))
                     arrayParagraphs.push(innerReplaced)
                 })
-                const apiResponse = await axios.post('/api/saveArticle',{date:Date(),parrafos: arrayParagraphs,titulo:title})
+                const apiResponse = await axios.post('/api/saveUserArticle',{date:Date(),parrafos: arrayParagraphs,titulo:title})
                 $('.addBlog').css('width','0%')
                 $('.addBlog').css('opacity','0')
                 $('.addBlog').css('width','0%')
@@ -846,7 +846,7 @@ $(document).ready(function(){
             }
             const { value:visibility } = await Swal.fire({title:'Cambiar la visibilidad de tu articulo',text:'Que visibilidad quieres para tu articulo',input: 'select',inputOptions:optionsSelect})
             const stateToChange = (visibility === 'visible') ? true : false
-            const apiResponse = await axios({url:'/api/changeVisibleArticle',method:'PUT',data: {visibility:stateToChange,id:changerKey}})
+            const apiResponse = await axios({url:'/api/changeVisibleArticleUser',method:'PUT',data: {visibility:stateToChange,id:changerKey}})
             Swal.fire({title: 'Bien Hecho',text: 'La visibilidad del articulo ha sido cambiada ',icon: 'success'})
             getArticles()
         } catch (e) {
@@ -859,7 +859,7 @@ $(document).ready(function(){
             const deleterKey = $(this).attr('deleterKey')
             const { isConfirmed:confirmed } = await Swal.fire({title: 'Cuidado!',text:'Si eliminas este articulo no podras recuperlarlo ',icon: 'warning',showCancelButton: true})
             if(confirmed){
-                const apiResponse = await axios({url:'/api/deleteArticle',method: 'DELETE',data: {deleterKey}})
+                const apiResponse = await axios({url:'/api/deleteArticleUser',method: 'DELETE',data: {deleterKey}})
                 Swal.fire({title: 'Bien Hecho',text: 'El articulo ha sido eliminado con exito ',icon:'success'})
                 getArticles()
             }else{
@@ -993,7 +993,7 @@ $(document).ready(function(){
     }
     async function getArticles(){
         try {
-            const {data: [articles,role,id]} = await axios({url:"/api/getArticles",method:"POST"})
+            const {data: articles} = await axios({url:"/articulos",method:"POST"})
             if(articles === 'nulos'){
                 const layout = `<div class="empty-title">
                                     <h1>Parece que no tienes ningun articulo </h1>
@@ -1007,18 +1007,17 @@ $(document).ready(function(){
                 $('.leaf').html(`<div class="wp-allArticles"></div>`)
                 let content = ``
                 let paragraphsContent = ``
-                articles.forEach(({titulo,visible,parrafos,creadorId,usernameCreator,imgCreator,_id}) => {
+                articles.forEach(({titulo,visible,parrafos,usernameCreator,imgCreator,_id}) => {
                     paragraphsContent = ``
-                    if(role === 'admin' || JSON.stringify(id) === JSON.stringify(creadorId)){
-                        if(visible){
-                            parrafos.forEach(parrafo => {
-                                paragraphsContent += `<div class="parrafos">
-                                                        <div class="parrafoArticle">
+                    if (visible) {
+                      parrafos.forEach((parrafo) => {
+                        paragraphsContent += `<div class="parrafos">
+                                            <div class="parrafoArticle">
                                                             ${parrafo}
                                                         </div>
-                                                    </div>`
-                            })
-                            content += `<div class="wp-article">
+                                                    </div>`;
+                      });
+                      content += `<div class="wp-article">
                                             <div class="header">
                                                 <h3>${titulo}</h3>
                                                 <div class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right">
@@ -1039,17 +1038,16 @@ $(document).ready(function(){
                                                     <span>Eliminar</span>
                                                 </button>
                                             </div>
-                                        </div>`
-
-                        }else{
-                            parrafos.forEach(parrafo => {
-                                paragraphsContent += `<div class="parrafos">
+                                        </div>`;
+                    } else {
+                      parrafos.forEach((parrafo) => {
+                        paragraphsContent += `<div class="parrafos">
                                                         <div class="parrafoArticle">
                                                             ${parrafo}
                                                         </div>
-                                                    </div>`
-                            })
-                            content += `<div class="wp-article">
+                                                    </div>`;
+                      });
+                      content += `<div class="wp-article">
                                             <div class="header">
                                                 <h3>${titulo}</h3>
                                                 <div class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right">
@@ -1070,57 +1068,9 @@ $(document).ready(function(){
                                                     <span>Eliminar</span>
                                                 </button>
                                             </div>
-                                        </div>`
-                        }
-                    }else{
-                        if(visible){
-                            parrafos.forEach(parrafo => {
-                                paragraphsContent += `<div class="parrafos">
-                                                        <div class="parrafoArticle">
-                                                            ${parrafo}
-                                                        </div>
-                                                    </div>`
-                            })
-                            content += `<div class="wp-article">
-                                            <div class="header">
-                                                <h3>${titulo}</h3>
-                                                <div class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right">
-                                                    <img src="/icons/hide.svg" alt="Hide" />
-                                                </div>
-                                            </div>
-                                            ${paragraphsContent}
-                                            <div class="wp-actions">
-                                                <div class="wp-creathorThumbnail">
-                                                    <img src="/${imgCreator}">
-                                                    <span>${usernameCreator}</span>
-                                                </div>
-                                            </div>
-                                        </div>`
-                        }else{
-                            parrafos.forEach(parrafo => {
-                                paragraphsContent += `<div class="parrafos">
-                                                        <div class="parrafoArticle">
-                                                            ${parrafo}
-                                                        </div>
-                                                    </div>`
-                            })
-                            content += `<div class="wp-article">
-                                            <div class="header">
-                                                <h3>${titulo}</h3>
-                                                <div class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right">
-                                                    <img src="/icons/eye(1).svg" alt="Visible" />
-                                                </div>
-                                            </div>
-                                            ${paragraphsContent}
-                                            <div class="wp-actions">
-                                                <div class="wp-creathorThumbnail">
-                                                    <img src="/${imgCreator}">
-                                                    <span>${usernameCreator}</span>
-                                                </div>
-                                            </div>
-                                        </div>`
-                        }
+                                        </div>`;
                     }
+
                 })
                 $('.wp-allArticles').html(content)
             }

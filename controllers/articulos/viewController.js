@@ -1,15 +1,16 @@
 const { dataUser } = require('./../../model/usersModel')
 const { getMyArticles } = require('./../../model/articlesModel')
-function controller(id){
+function controller(id,initializate){
     return new Promise(async (resolve, reject) => {
         try{
-            const dataRender = await dataUser(id)        
-            if(Array.isArray(dataRender) && dataRender.length >= 3){
+            if(initializate){
+                const perfilData = await dataUser(id)        
                 const myArticles = await getMyArticles(id)
-                console.log(myArticles)
-                resolve({articles:myArticles,dataRender})
+                resolve({arts:myArticles,perfilData})
+            }else{
+                const myArticles = await getMyArticles(id)
+                resolve(myArticles)
             }
-            reject('notUser')
         }catch(e){
             reject(e)
         }

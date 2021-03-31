@@ -1,7 +1,7 @@
 const express = require('express') 
 const router = express.Router()
 
-const controller = require('./../../controllers/articulos/controllerDelete')
+const controller = require('./../../controllers/articulos/controllerDeleteUser')
 
 const checker = require('./../../utils/auth/userVerify')
 
@@ -17,7 +17,6 @@ router.delete('/',checker,async(req,res) => {
         delete e 
         res.send(errorLog)
     }
-
 })
 
 module.exports = router

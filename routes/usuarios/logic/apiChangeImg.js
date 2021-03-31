@@ -15,25 +15,14 @@ router.post('/',checker,imgUpload,async (req,res)=>{
         const id = req.session.idUserLog
         const file = req.file ? req.file : 'nulo'
         const controllerResponse = await controller(id,file)
-
+        console.log(controllerResponse)
         res.send(controllerResponse)
     } catch (e) {
         const errorLog = managerError(e,arrayError)
         delete e 
         res.send(e)
     }
-/*     const id = req.session.idUserLog 
-    if(id === '' || id === undefined || id === null){
-        res.send('notUser')
-    }else{
-        controller(id,req,res)
-            .then(ok => res.send(ok))
-            .catch(e => {
-                const errorMsg = errorManager(e,arrayError)
-                delete e 
-                res.send(e)
-            })
-    } */
+
 })
 
 module.exports = router

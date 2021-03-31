@@ -217,8 +217,9 @@ function changePasswordUser(id,password){
                 Usuario.findByIdAndUpdate(id,{password:hash},function(err,query){
                     if(err){
                         reject(err)
+                    }else{
+                        resolve('ok')
                     }
-                    resolve('ok')
                 })
             })
         })

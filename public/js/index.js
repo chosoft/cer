@@ -68,7 +68,7 @@ $(document).ready(function(){
             }else if(response ==='notUser'){
                 Swal.fire({title: '!Uups',icon: 'warning',text: 'Parece que este usuario no esta registrado o esta inactivo'})
             }else if(response === 'badLogin'){
-                Swal.fire({tile: '!Ey',icon: 'warning',text: 'Parece que la combinacion de usuario y contraseña no coinciden, o tal vez este usuario no exista'})
+                Swal.fire({title: '!Ey',icon: 'warning',text: 'Parece que la combinacion de usuario y contraseña no coinciden, o tal vez este usuario no exista'})
             }else if(response === 'serverError'){
                 Swal.fire({title: 'Error',icon: 'error',text: 'Ha ocurrido un error en el servidor. Comunicate con el administrador'})
             }else{

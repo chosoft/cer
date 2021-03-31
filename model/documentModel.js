@@ -17,10 +17,10 @@ const documentosSchema = new Schema({
 const Documento = new model('Documento',documentosSchema)
 
 //Functions CRUD
-function getAllDocs(filter){
+function getAllDocs(filter,id){
     return new Promise((resolve, reject) =>{
         //Search all docs
-        Documento.find({group:filter},function(err,docs){
+        Documento.find({owner:id,group:filter},function(err,docs){
             if(err){
                 reject(err)
             }else{
@@ -64,15 +64,18 @@ function deleteDoc(key){
         })
     })
 }
-function getFilterDocs(type){
+function getFilterDocs(type,id){
     return new Promise((resolve, reject) => {
-        Documento.find({type},(err,docs) => {
+        Documento.find({owner:id,type},(err,docs) => {
             if(err){
                 reject(err)
             }else{
                 if(docs === null || docs.length <= 0 ){
                     resolve('nulos')
                 }else{
+                    docs.sort((a,b)=>{
+                        return new Date(b.date) - new Date(a.date)
+                    })
                     resolve(docs)
                 }
             }
@@ -91,11 +94,10 @@ function saveMany(obj){
                 type:obj.types[i],
                 ip:obj.ip,
                 group: obj.group,
-                visible: obj.visible[i]
+                visible: obj.visible[i],
             }
             docs = new Documento(oneDoc)
             docs.save((err) => {
-                console.log(err)
                 if(err){
                     reject(err)
                 }else{

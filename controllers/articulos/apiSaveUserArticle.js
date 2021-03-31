@@ -1,11 +1,18 @@
-function controller(id,obj){
+const { saveArticleUser } = require('./../../model/articlesModel')
+function controller(id,ip,obj){
     return new Promise(async (resolve,reject) => {
         try{
-            if(Object.entries(obj) <= 0 ){
+            if(Object.keys(obj).length <= 0){
                 reject('notObj')
+            }else{
+                const finalData = {
+                    ...obj,
+                    ip,
+                    creadorId:id,
+                }
+                const modelResponse = await saveArticleUser(finalData)
+                resolve(modelResponse)
             }
-            
-
         }catch(e){
             reject(e)
         }

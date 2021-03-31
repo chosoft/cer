@@ -1,0 +1,27 @@
+
+.wp-allArticles
+    each articulo in arts
+
+        .wp-article
+            div(class="header")
+                h3= articulo.titulo
+                if articulo.visible
+                    div(class="visible-cont" aria-label="Articulo visible" data-balloon-pos="right")
+                        img(src="/icons/eye(1).svg" alt="Visible" )
+                else
+                    div(class="visible-cont" aria-label="Articulo oculto" data-balloon-pos="right")
+                        img(src="/icons/hide.svg" alt="Hide")
+            each parrafo in articulo.parrafos
+                div(class="parrafos")
+                    - var p = parrafo
+                    div(class="parrafoArticle") !{p}
+            .wp-actions
+                button(class="visibleArticleBtn" changerKey=`${articulo._id}`)
+                    img(src="/icons/dots.svg")
+                div(class="wp-creathorThumbnail")
+                    img(src=`/${articulo.imgCreator}`)
+                    span= articulo.usernameCreator
+                button(class="deleteArticlebtn" deleterKey=`${articulo._id}`)
+                    img(src="/icons/delete.svg")
+                    span Eliminar
+

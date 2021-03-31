@@ -37,12 +37,6 @@ html(lang="en")
                                         .wp-btnUse
                                             button(class="dotsDisplay clickerView" keyChanger=`${doc._id}`) 
                                                 img(src="/icons/dots.svg")
-                                            div(class="wp-edtAct" id=`${doc._id}`)
-                                                div(class="wp-editing" )
-                                                    nav
-                                                        div(class="wp-actSend")
-                                                            label(class="lbCheck" for="vsb") Visible
-                                                            input(type="checkbox", name="checkVisible" id="vsb")
                                     if doc.visible
                                         .wp-imgType(aria-label="Documento visible" data-balloon-pos="right")
                                             img(src=`/icons/uploads/${doc.type}.svg`)

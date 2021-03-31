@@ -14,8 +14,9 @@ function validate(obj){
             const valueSchema =  Schema.validate(obj)
             if(valueSchema.error === undefined || valueSchema.error === ''){
                 resolve({password:obj.passwordOne,error:''})
+            }else{
+                reject({password:'', error: valueSchema.error})
             }
-            reject({password:'', error: valueSchema.error})
         } catch (e) {
             reject(e)            
         }

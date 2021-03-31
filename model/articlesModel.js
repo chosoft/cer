@@ -7,7 +7,7 @@ const articulosBlogSchema = new Schema({
     titulo: {required: true,type:String},
     parrafos: {required: true,type:Array},
     creadorId: {required: true,type:mongoose.ObjectId},
-    date: {required: true,type:Date,default: Date.now()},
+    date: {required: true,type:Date,default: Date()},
     visible: {required: true,type:Boolean, default: false},
     ip: {required: true,type:String}
 })
@@ -15,14 +15,14 @@ const eraserSchema = new Schema({
     title: {required: true,type:String},
     paragraphs: {required: true,type:Array},
     ownerId: {required: true,type:mongoose.ObjectId},
-    date: {required: true,type:Date,default: Date.now()},
+    date: {required: true,type:Date,default: Date()},
     group: {required: true,type:String,default:'dash'}
 })
 const myArticlesSchema = new Schema({
     titulo: {required: true,type:String},
     parrafos: {required: true,type:Array},
     creadorId: {required: true,type:mongoose.ObjectId},
-    date: {required: true,type:Date,default: Date.now()},
+    date: {required: true,type:Date,default: Date()},
     visible: {required: true,type:Boolean, default: false},
     ip: {required: true,type:String}
 })
@@ -105,9 +105,33 @@ function saveArticle(body){
         })
     })
 }
+function saveArticleUser(body){
+    //Waiting for complete this function
+    return new Promise((resolve, reject) => {
+        const article = new MyArticle(body)
+        article.save((err) => {
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
 function changeVisibility(key,visibility){
     return new Promise((resolve, reject) => {
         Articulo.findOneAndUpdate({_id:key},{visible:visibility},(err)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
+function changeVisibilityUser(key,visibility){
+    return new Promise((resolve, reject) => {
+        MyArticle.findOneAndUpdate({_id:key},{visible:visibility},(err)=>{
             if(err){
                 reject(err)
             }else{
@@ -128,14 +152,50 @@ function deleteArticle(key){
         })
     })
 }
+function deleteArticleUser(key){
+    return new Promise((resolve, reject) => {
+        const {deleterKey} = key
+        MyArticle.findByIdAndDelete(deleterKey, (err) => {
+            if(err){
+                reject(err)
+            }else{
+                resolve('ok')
+            }
+        })
+    })
+}
 function getMyArticles(id){
     return new Promise(async (resolve, reject) => {
         try {
-            const docs = MyArticle.find({})
+            const docs = await MyArticle.find({creadorId:id})
             if(docs === '' || docs === null || docs.length <= 0){
                 resolve('nulos')
+            }else{
+                const dataUser = await dataArticle(id)
+                let finalDocs = []
+                let finalObj = {}
+                docs.sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date)
+                })
+                docs.forEach(dato => {
+                    finalObj = {
+                        _id: dato._id,
+                        parrafos: dato.parrafos,
+                        titulo: dato.titulo,
+                        date: dato.date,
+                        creadorId: dato.creadorId,
+                        visible: dato.visible,
+                        usernameCreator:dataUser[0],
+                        imgCreator:dataUser[1],
+                    }
+                    finalDocs.push(finalObj)
+                    if(docs.length === finalDocs.length){
+                        resolve(finalDocs)
+                    }else{
+
+                    }
+                })
             }
-            resolve(docs)
         }catch(e){
             reject(e)
         }
@@ -144,9 +204,12 @@ function getMyArticles(id){
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
+    changeVisibilityUser,
     saveArticle,
+    saveArticleUser,
     saveEraser,
     deleteArticle,
     changeVisibility,
+    deleteArticleUser,
     getMyArticles
 }
