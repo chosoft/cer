@@ -154,7 +154,7 @@ function returnDataArticle(id){
                     }else if(user === null) {
                         reject('notUser')
                     }else{
-                        const arrayData = [user.username,user.img]
+                        const arrayData = [user.username,user.img,user.banType]
                         resolve(arrayData)
                     }   
                 })

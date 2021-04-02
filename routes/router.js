@@ -6,6 +6,7 @@ const dashRouter = require('./usuarios/dash')
 const docsRouter = require('./documentos/documentos')
 const perfilRouter = require('./perfil/perfil')
 const articulosRouter = require('./articulos/articulosPersonal')
+const articulosCerRouter = require('./frontend/articulos')
 //const testRouter = require('./test/testing')
 //Modules of 404 Routes
 const { notFound } = require('./../utils/errors/managers')
@@ -14,6 +15,7 @@ const router = function(server){
     //View Route
     server.use('/',indexRouter)
     server.use('/loguearse',loginRouter)
+    server.use('/articuloscer',articulosCerRouter)
     server.use('/private/c/registro',registrarseRouter)
     server.use('/dash',dashRouter)
     server.use('/documentos',docsRouter)

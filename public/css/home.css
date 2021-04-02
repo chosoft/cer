@@ -46,12 +46,21 @@
   height: 300px;
   margin: auto;
   display: block;
+  opacity: 1;
+  transition: all 0.3s linear;
 }
 .wp-info .wp-slider .hide {
+  opacity: 0;
   display: none;
 }
 .wp-info .wp-slider .toggleBtnSlide {
   padding: 10px;
+  border: none;
+  background: none;
+  width: auto;
+  cursor: pointer;
+  background: url("./../assets/next.svg");
+  background-repeat: no-repeat;
 }
 
 /*# sourceMappingURL=home.css.map */

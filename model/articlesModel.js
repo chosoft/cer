@@ -201,6 +201,46 @@ function getMyArticles(id){
         }
     })
 }
+function getArticlesUser(){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const articlesUsers = await MyArticle.find({})
+            if(articlesUsers.length <= 0){
+                reject('nulos')
+            }else{
+                let articleResponse = ''
+                let finalObj = {}
+                let finalArray = []
+                articlesUsers.forEach(async(article) => {
+                    articleResponse = await dataArticle(article.creadorId)
+                    if(article.visible){
+                        finalObj = {
+                            _id: article._id,
+                            titulo: article.titulo,
+                            date: article.date,
+                            creadorId: article.creadorId,
+                            usernameCreator: articleResponse[0],
+                            imgCreator: articleResponse[1],
+                            banType: articleResponse[2],
+                        }
+                        finalArray.push(finalObj)
+    
+                        if(finalArray.length === articlesUsers.length){
+                            resolve(finalArray)
+                        }else{
+    
+                        }
+                    }else{
+                        
+                    }
+                    
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
@@ -211,5 +251,6 @@ module.exports = {
     deleteArticle,
     changeVisibility,
     deleteArticleUser,
-    getMyArticles
+    getMyArticles,
+    getArticlesUser
 }

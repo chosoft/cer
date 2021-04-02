@@ -1,0 +1,69 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title articulos 
+        link(rel="shortcut icon", href="/icons/favicon.png", type="image/x-icon")
+        link(href="https://fonts.googleapis.com/css2?family=Lato&family=Oxygen:wght@400;700&display=swap" rel="stylesheet") 
+        link(href="/css/index.css" rel="stylesheet") 
+        link(href="/css/articulosUser.css" rel="stylesheet") 
+    body
+        include layout/header.pug
+
+        section.banner
+            .wp-content
+                h1 Articulos mas recientes
+                button.filterBtn
+                    img(src="", alt="")
+                    span Filtrar por 
+        section.allCardArticles
+            if articulos === 'nulos'
+                h2 articulos nulos
+            else 
+                articulos
+        section.selectorFilter
+            .selectCont                    
+                h2(id="tlFilt") Filtros
+                .contSquare
+                    .squareFilter(filter="maestro")
+                        img(src="/assets/teacher.svg") 
+                        h2 Filtro de Maestro
+                    .squareFilter(filter="fecha")
+                        img(src="/assets/calendar.svg") 
+                        h2 Filtro de fecha
+                    .squareFilter(filter="palabra")
+                        img(src="/assets/word.svg") 
+                        h2 Filtro con palabra
+                .contInputFilter 
+                    #maestro.hide.contAction
+                        h2 Filtro de Maestro
+                        .wp-searchBar
+                            input(type="text" placeholder="Nombre o apellido de tu maestro")
+                            button(class="sendToApi" filterType="maestro") 
+                                img(src="/assets/arrow.svg")
+                        .wp-result
+                    #fecha.hide.contAction
+                        h2 Filtro de Fecha
+                        .wp-searchBar
+                            input(type="text" placeholder="DD/MM/AA")
+                            button(class="sendToApi" filterType="fecha") 
+                                img(src="/assets/arrow.svg")
+                        .wp-result
+                    #palabra.hide.contAction
+                        h2 Filtro de palabra
+                        .wp-searchBar
+                            input(type="text" placeholder="Palabra a buscar")
+                            button(class="sendToApi" filterType="palabra") 
+                                img(src="/assets/arrow.svg")
+                        .wp-result
+                
+            button(class="closer")
+                img(src="/icons/close-wh.svg", alt="")
+
+        script(src="/js/axios.min.js")
+        script(src="/js/sweetalert2.js")
+        script(src="/js/jquery.min.js")
+        script(src="/js/particles.min.js")
+        script(src="/js/articulos.js")
