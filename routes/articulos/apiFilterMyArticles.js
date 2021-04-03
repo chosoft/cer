@@ -16,6 +16,7 @@ router.post('/', async(req, res)=> {
             res.send(controllerResponse)
         }
     } catch (e) {
+        console.log(e)
         const errorLog = managerError(e,arrayError)
         delete e 
         res.send(errorLog)        

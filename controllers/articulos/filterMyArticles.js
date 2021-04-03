@@ -1,5 +1,5 @@
 const { returnUserByName } = require('./../../model/usersModel')
-const { getArticleUserById,getArticlesUser } = require('./../../model/articlesModel')
+const { getArticleUserById,getArticlesUser,getArticlesUserParagraphs } = require('./../../model/articlesModel')
 function controller(filter,filterType){
     return new Promise(async (resolve, reject) => {
         try {
@@ -35,17 +35,18 @@ function controller(filter,filterType){
                     }
                 }
             }else if(filterType === 'palabra'){
-                const modelWordResponse = await getArticlesUser()
+                const modelWordResponse = await getArticlesUserParagraphs()
                 if(modelWordResponse.length <= 0){
                     resolve('nulos')
                 }else{
                     let finalData = []
                     let finalObj = {}
+                    let actParagraph = ''
                     modelWordResponse.forEach(({parrafos,_id,titulo,creadorId,date,usernameCreator,imgCreator,banType},index) => {
                         parrafos.forEach(parrafo => {
-                            parrafo.split(' ')
-                            for (let i = 0; i < parrafo.length; i++) {  
-                                if(parrafo[i].toLowerCase().trim() === filter.toLowerCase()){
+                            actParagraph = parrafo.split(' ')
+                            for (let i = 0; i < actParagraph.length; i++) {  
+                                if(actParagraph[i].toLowerCase().trim().includes(filter)){
                                     finalObj = {
                                         _id,
                                         titulo,
@@ -56,16 +57,17 @@ function controller(filter,filterType){
                                         banType ,
                                     }
                                     finalData.push(finalObj)
-                                    if(index+1 === modelWordResponse.length){
-                                        resolve(finalData)
-                                    }else{
 
-                                    }
                                 }else{
 
                                 }
                             }
                         })
+                        if(index+1 === modelWordResponse.length){
+                            resolve(finalData)
+                        }else{
+
+                        }
                     })
                 }
             }else{

@@ -247,6 +247,16 @@ function returnUserByName(nameFilter){
         }
     })
 }
+function getAllActiveUsers(){
+    return new Promise(async(resolve, reject) => {
+        try {
+            const usuarios = await Usuario.find({activo:true})
+            resolve(usuarios)
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports functions
 module.exports = {
     saveUser:saverUser,
@@ -258,5 +268,6 @@ module.exports = {
     changeImgUser,
     changePasswordUser,
     returnUserByName,
+    getAllActiveUsers,
 }
 

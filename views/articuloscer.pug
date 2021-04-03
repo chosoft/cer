@@ -20,7 +20,7 @@ html(lang="es")
                     span Filtrar por 
         section.allCardArticles
             if articulos === 'nulos'
-                h2 articulos nulos
+                include null/cerArts.pug
             else 
                 each articulo in articulos
                     .card-article(redirectTo=`/maestro/${articulo.usernameCreator}/${articulo._id}`)

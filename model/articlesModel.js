@@ -236,6 +236,42 @@ function getArticlesUser(){
         }
     })
 }
+function getArticlesUserParagraphs(){
+    return new Promise(async(resolve, reject)=> {
+        try {
+            const articlesUsers = await MyArticle.find({visible: true})
+            if(articlesUsers.length <= 0){
+                reject('nulos')
+            }else{
+                let articleResponse = ''
+                let finalObj = {}
+                let finalArray = []
+                articlesUsers.forEach(async(article) => {
+                    articleResponse = await dataArticle(article.creadorId)
+                    finalObj = {
+                        _id: article._id,
+                        titulo: article.titulo,
+                        date: article.date,
+                        parrafos: article.parrafos,
+                        creadorId: article.creadorId,
+                        usernameCreator: articleResponse[0],
+                        imgCreator: articleResponse[1],
+                        banType: articleResponse[2],
+                    }
+                    finalArray.push(finalObj)
+    
+                    if(finalArray.length === articlesUsers.length){
+                        resolve(finalArray)
+                    }else{
+    
+                    }
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 function getArticleUserById(idArray){
     return new Promise(async(resolve, reject) => {
         try {
@@ -297,6 +333,23 @@ function getArticleUserById(idArray){
         }
     })
 }
+function getAllArticlesFrontend(){
+    return new Promise(async(resolve, reject) => {
+        try {
+            const articles = await Articulo.find({visible: true})
+            if(articles.length <= 0){
+                resolve('nulos')
+            }else{
+                articles.sort((a,b) => {
+                    return new Date(b.date) - new Date(a.date)
+                })
+                resolve(articles)
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
@@ -309,5 +362,7 @@ module.exports = {
     deleteArticleUser,
     getMyArticles,
     getArticlesUser,
-    getArticleUserById
+    getArticleUserById,
+    getArticlesUserParagraphs,
+    getAllArticlesFrontend
 }
