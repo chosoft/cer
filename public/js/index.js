@@ -23,7 +23,7 @@ $(document).ready(function(){
         try {
             e.preventDefault()
             const dataRegister = {username:$('#username').val(),correo: $('#correo').val(),password: $('#pass1').val(),passwordConf: $('#pass2').val(),}
-            const { data:response } = await axios({method: 'POST',dataRegister,url: '/api/registro',})
+            const { data:response } = await axios({method: 'POST',dataRegister,url: '/api/registro',data:dataRegister})
             if(response === 'serverError'){
                 Swal.fire({title: 'Error',icon: 'error',text: 'Ha ocurrido un error en el servidor'})
             }else if(response === 'nulos'){

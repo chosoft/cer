@@ -225,6 +225,28 @@ function changePasswordUser(id,password){
         })
     })
 }
+
+function returnUserByName(nameFilter){
+    return new Promise( async (resolve, reject) =>{
+        try {
+            const users = await Usuario.find({activo:true})
+            if(users.length <= 0){
+                reject('notUser')
+            }else{
+                let usersFound = []
+                users.forEach(({username,_id},index) => {
+                    if(username.toLowerCase().includes(nameFilter)){
+                        usersFound.push(_id)
+                    }else{
+                    }
+                })
+                resolve(usersFound)
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports functions
 module.exports = {
     saveUser:saverUser,
@@ -234,6 +256,7 @@ module.exports = {
     dataPerfil: returnPerfilData,
     changeUserName,
     changeImgUser,
-    changePasswordUser
+    changePasswordUser,
+    returnUserByName,
 }
 

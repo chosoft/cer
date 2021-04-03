@@ -22,7 +22,14 @@ html(lang="es")
             if articulos === 'nulos'
                 h2 articulos nulos
             else 
-                articulos
+                each articulo in articulos
+                    .card-article(redirectTo=`/maestro/${articulo.usernameCreator}/${articulo._id}`)
+                        div(class=`wp-bannerCard color-${articulo.banType}`)
+                        .wp-infoCard
+                            .wp-img 
+                                img(src=`/${articulo.imgCreator}`)
+                            .wp-title   
+                                h3= articulo.titulo
         section.selectorFilter
             .selectCont                    
                 h2(id="tlFilt") Filtros
@@ -47,7 +54,9 @@ html(lang="es")
                     #fecha.hide.contAction
                         h2 Filtro de Fecha
                         .wp-searchBar
-                            input(type="text" placeholder="DD/MM/AA")
+                            select(placeholder="Elije una opcion")
+                                option(value="plus") Articulos mas recientes
+                                option(value="less") Articulos menos recientes
                             button(class="sendToApi" filterType="fecha") 
                                 img(src="/assets/arrow.svg")
                         .wp-result

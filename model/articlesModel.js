@@ -204,7 +204,7 @@ function getMyArticles(id){
 function getArticlesUser(){
     return new Promise(async (resolve, reject) => {
         try {
-            const articlesUsers = await MyArticle.find({})
+            const articlesUsers = await MyArticle.find({visible: true})
             if(articlesUsers.length <= 0){
                 reject('nulos')
             }else{
@@ -213,29 +213,85 @@ function getArticlesUser(){
                 let finalArray = []
                 articlesUsers.forEach(async(article) => {
                     articleResponse = await dataArticle(article.creadorId)
-                    if(article.visible){
-                        finalObj = {
-                            _id: article._id,
-                            titulo: article.titulo,
-                            date: article.date,
-                            creadorId: article.creadorId,
-                            usernameCreator: articleResponse[0],
-                            imgCreator: articleResponse[1],
-                            banType: articleResponse[2],
-                        }
-                        finalArray.push(finalObj)
-    
-                        if(finalArray.length === articlesUsers.length){
-                            resolve(finalArray)
-                        }else{
-    
-                        }
-                    }else{
-                        
+                    finalObj = {
+                        _id: article._id,
+                        titulo: article.titulo,
+                        date: article.date,
+                        creadorId: article.creadorId,
+                        usernameCreator: articleResponse[0],
+                        imgCreator: articleResponse[1],
+                        banType: articleResponse[2],
                     }
-                    
+                    finalArray.push(finalObj)
+
+                    if(finalArray.length === articlesUsers.length){
+                        resolve(finalArray)
+                    }else{
+
+                    }
                 })
             }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+function getArticleUserById(idArray){
+    return new Promise(async(resolve, reject) => {
+        try {
+            let finalData = []
+            let finalObj = {}
+            idArray.forEach(async (id,index) => {
+                let userAddData = await dataArticle(id)
+                let articlesUser = await MyArticle.find({creadorId:id,visible:true})
+                if(articlesUser.length <= 0){
+                    if(index+1 === idArray.length){
+                        resolve(finalData)
+                    }else{
+    
+                    }
+                }else{
+                    articlesUser.forEach((art,indexArt) => {
+                        finalObj = {
+                            _id: art._id,
+                            titulo: art.titulo,
+                            date: art.date,
+                            creadorId: art.creadorId,
+                            usernameCreator: userAddData[0],
+                            imgCreator: userAddData[1],
+                            banType: userAddData[2],
+                        }
+                        finalData.push(finalObj)
+                        if(indexArt+1 === articlesUser.length){
+                            if(index+1 === idArray.length){
+                                resolve(finalData)
+                            }else{
+            
+                            }    
+                        }else{
+
+                        }
+                    })
+                }
+                
+/*                 if(articlesUser.length <= 0){
+   
+                }else{
+                    articlesUser.forEach(art => {
+                        finalObj = {
+                            _id: art._id,
+                            titulo: art.titulo,
+                            date: art.date,
+                            creadorId: art.creadorId,
+                            usernameCreator: userAddData[0],
+                            imgCreator: userAddData[1],
+                            banType: userAddData[2],
+                        }
+                        finalData.push(finalObj)
+                    })
+                } */
+
+            })
         } catch (e) {
             reject(e)
         }
@@ -252,5 +308,6 @@ module.exports = {
     changeVisibility,
     deleteArticleUser,
     getMyArticles,
-    getArticlesUser
+    getArticlesUser,
+    getArticleUserById
 }

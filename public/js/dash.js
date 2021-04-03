@@ -356,7 +356,7 @@ $(document).ready(function(){
             }
         } catch (e) {
             console.log(e)
-           Swal.fire({title: 'Error',text:'Ha ocurrido un error al realizar la accion',icon: 'error'}) 
+            Swal.fire({title: 'Error',text:'Ha ocurrido un error al realizar la accion',icon: 'error'}) 
         }
     })
     //Add video to the article
@@ -374,7 +374,6 @@ $(document).ready(function(){
                 }
                 const { value:modeToAdd } = await Swal.fire({title: 'Añadir video',text: 'Elige como añadiras el video',input: 'select',
                                                     inputOptions:{addVideo: 'Añadir',docs: 'Video de Documentos'}})
-                console.log(modeToAdd)
                 if(modeToAdd === 'youtube'){
                     const { value: [iframe,paragraph] } = await Swal.mixin({showCancelButton: true,progressSteps: ['1', '2', '3']})
                                                         .queue([{title: 'Iframe del video',input: 'text',text: 'Video embebido de youtube',inputPlaceholder: 'Texto copiado de Youtube',},
@@ -498,7 +497,7 @@ $(document).ready(function(){
                         $('.selectorVideo').css('display','flex')
                         $('.selectorVideo').html(insert)
                      rel="noopenner norefer"}else{
-                        window.location = '/loguearse'
+                        console.log(docs)
                     }
                 }else{}
             }

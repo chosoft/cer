@@ -16,6 +16,7 @@ const apiChangeImgProfile = require('./usuarios/logic/apiChangeImg')
 const apiChangePassword = require('./usuarios/logic/apiChangePassword')
 const apiSaveUserArticle = require('./articulos/apiSaveArticle.js')
 const apiGetArticle = require('./articulos/getArticles')
+const apiFilterMyArticles = require('./articulos/apiFilterMyArticles')
 //Modules of Routes to user interact
 const logout = require('./usuarios/logic/logout')
 const router = function(server){
@@ -24,6 +25,7 @@ const router = function(server){
     server.use('/api/login',apiLogin)
     server.use('/api/registro',apiRegister)
     server.use('/api/retrieve',apiRetrieve)
+    server.use('/api/myArticles',apiFilterMyArticles)
     server.use('/api/getArticles',apiGetArticle)
     //SAVE APIS FUNC
     server.use('/api/eraserSave',apiSaveEraser)

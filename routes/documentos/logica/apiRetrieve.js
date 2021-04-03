@@ -13,6 +13,7 @@ const arrayError = ['notUser','null']
 
 router.post('/:type',checker,async (req,res) => {
     try {
+        const id = req.session.idUserLog
         const type = (req.params.type === 'image' || req.params.type === 'video') ? req.params.type : 'image'
         const mode = (type === 'video') ? 'vid' : type
         const controllerResponse = await controller(mode,id)
@@ -25,6 +26,7 @@ router.post('/:type',checker,async (req,res) => {
             res.send(controllerResponse)
         }
     } catch (e) {
+        console.log(e)
         const errorLog = managerError(e,arrayError)
         delete e 
         res.send(errorLog)
