@@ -350,6 +350,38 @@ function getAllArticlesFrontend(){
         }
     })
 }
+
+function getSimpleArticle(id){
+    return new Promise(async(resolve, reject) => {
+        try {
+            const articles = await MyArticle.find({creadorId:id,visible:true})
+            if(articles.length <= 0){
+                console.log('nulE')
+
+                resolve('nulos')
+            }else{
+                console.log('E')
+                resolve(articles)
+            }
+        } catch (e) {
+            reject(e)
+        } 
+    })
+}
+function getArticleById(id,articulo) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const article = await MyArticle.find({_id:articulo,visible:true,creadorId:id})
+            if(article.length <= 0){
+                resolve('nulo')
+            }else{
+                resolve(article)
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports Functions
 module.exports = {
     getArticles:getAllArcticles,
@@ -364,5 +396,7 @@ module.exports = {
     getArticlesUser,
     getArticleUserById,
     getArticlesUserParagraphs,
-    getAllArticlesFrontend
+    getAllArticlesFrontend,
+    getSimpleArticle,
+    getArticleById
 }

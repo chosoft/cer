@@ -9,6 +9,7 @@ const articulosRouter = require('./articulos/articulosPersonal')
 const articulosCerRouter = require('./frontend/articulos')
 const blogRouter = require('./frontend/blog')
 const maestrosRouter = require('./frontend/maestros')
+const maestroRouter = require('./frontend/maestro')
 //const testRouter = require('./test/testing')
 //Modules of 404 Routes
 const { notFound } = require('./../utils/errors/managers')
@@ -25,6 +26,8 @@ const router = function(server){
     server.use('/articulos', articulosRouter)
     server.use('/blog', blogRouter)
     server.use('/maestros', maestrosRouter)
+    server.use('/maestro', maestroRouter)
+
     //server.use('/testing',testRouter)
     //404 route
     server.use(notFound)

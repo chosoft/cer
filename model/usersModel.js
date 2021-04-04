@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const { Schema,model } = mongoose
 const { randomNumber } = require('./../utils/functions/index')
 const bcrypt = require('bcrypt')
-
+const { getSimpleArticle,getArticleById } = require('./articlesModel')
+const { getAllDocsUsersId } = require('./documentModel.js')
 //Schema of the model
 const usuarioSchema = new Schema({
     username: {required: true,type:String},
@@ -161,6 +162,7 @@ function returnDataArticle(id){
             }
 
         } catch (err) {
+            console.log(err)
             reject(err)
         }
     })
@@ -257,6 +259,28 @@ function getAllActiveUsers(){
         }
     })
 }
+
+function getDataPerfilMaestro(maestro,articulo,id){
+    return new Promise(async(resolve, reject) => {
+        try {
+            const user = await Usuario.find({username:maestro})
+            if(user.length <= 0){
+                resolve('nullUser')
+            }else{
+                if(articulo === 'nulo'){
+                    const articulos = await getSimpleArticle(user[0]._id)
+                    const documentos = await getAllDocsUsersId(user[0]._id)
+                    resolve({articulos,documentos,user})
+                }else{
+                    const articuloFilter = await getArticleById(user[0]._id,articulo)
+                    resolve({articuloFilter,user})
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports functions
 module.exports = {
     saveUser:saverUser,
@@ -265,6 +289,7 @@ module.exports = {
     dataArticle: returnDataArticle,
     dataPerfil: returnPerfilData,
     changeUserName,
+    getDataPerfilMaestro,
     changeImgUser,
     changePasswordUser,
     returnUserByName,

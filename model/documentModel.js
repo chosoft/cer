@@ -119,11 +119,26 @@ function changeVisibility(idMongo,visibility){
         })
     })
 }
+function getAllDocsUsersId(id){
+    return new Promise(async(resolve, reject) => {
+        try {
+            const documentos = await Documento.find({owner:id,visible:true,group:'documentos'})
+            if(documentos.length <= 0){
+                resolve('nulos')
+            }else{
+                resolve('documentos')
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 //Exports Functions
 module.exports = {
     getDocs: getAllDocs,
     saveDocs,
     deleteDoc,
     filterDocs: getFilterDocs,
-    changeVisibility
+    changeVisibility,
+    getAllDocsUsersId
 }
