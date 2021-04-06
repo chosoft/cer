@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 const { Schema,model } = mongoose
 const { randomNumber } = require('./../utils/functions/index')
 const bcrypt = require('bcrypt')
-const { getSimpleArticle,getArticleById } = require('./articlesModel')
-const { getAllDocsUsersId } = require('./documentModel.js')
 //Schema of the model
 const usuarioSchema = new Schema({
     username: {required: true,type:String},
@@ -106,64 +104,58 @@ function loginUser(body){
                     })
                 }
             })
-        } catch (e) {
+        }catch (e) {
             reject(e)
         }
     })}
 
 function returnIdData(id){
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             //Find the user by his id
-            Usuario.findById(id, function (err,user){
-                if(err){
-                    reject(err);
-                }else if(user === null){
-                    reject('null')
-                }else{
-                    //checking his information
-                    if(user.username === '' || user.cargo === '' || user.img === '' ){
-                        reject('notUser')
-                    }else{
-                        //checking his role
-                        if(user.rol === 'user' || user.rol === 'admin'){
-                            const userData = [user.username, user.cargo, user.img,user.rol]
-                            resolve(userData)
-                        }else{
-                            reject('notUser')
-                        }
-                    }
-                }
+            const usuario = await Usuario.findById(id)
+            const verify = usuario ? true : false
 
-            })
+            if(verify){
+                const userData = [usuario.username,usuario.cargo,usuario.img,usuario.rol,usuario.banType]
+                resolve(userData)
+            }else{
+                reject('null')
+            }
         } catch (err) {
             reject(err)
         }
     })
 }
 
-function returnDataArticle(id){
-    return new Promise((resolve, reject) => {
+function dataArticle(id){
+    return new Promise(async (resolve, reject) => {
         try {
             if(id === '' || id === undefined || id === null){
                 reject('idNull')
             }else{
-                //Find the user by his id
-                Usuario.findById(id, function(err,user){
-                    if(err){
-                        reject(err)
-                    }else if(user === null) {
-                        reject('notUser')
-                    }else{
-                        const arrayData = [user.username,user.img,user.banType]
-                        resolve(arrayData)
-                    }   
-                })
+                const userModelResponse = await Usuario.find({_id:id})
+                const verify = (userModelResponse[0]) ? true : false
+                if(verify){
+                    const arrayData = [userModelResponse[0].username, userModelResponse[0].img, userModelResponse[0].banType]
+                    resolve(arrayData)
+                }else{
+                    reject('notUser')
+                }
             }
+        }catch (e) {
+            console.log(e)
+            reject(e)
+        }
+    })
+} 
 
-        } catch (err) {
-            console.log(err)
-            reject(err)
+function asd(id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            
+        } catch (e) {
+
         }
     })
 }
@@ -263,18 +255,21 @@ function getAllActiveUsers(){
 function getDataPerfilMaestro(maestro,articulo,id){
     return new Promise(async(resolve, reject) => {
         try {
-            const user = await Usuario.find({username:maestro})
+            let user = await Usuario.find({username:maestro})
             if(user.length <= 0){
                 resolve('nullUser')
             }else{
-                if(articulo === 'nulo'){
-                    const articulos = await getSimpleArticle(user[0]._id)
-                    const documentos = await getAllDocsUsersId(user[0]._id)
-                    resolve({articulos,documentos,user})
-                }else{
-                    const articuloFilter = await getArticleById(user[0]._id,articulo)
-                    resolve({articuloFilter,user})
+                const userData = {
+                    cargo: user[0].cargo,
+                    img: user[0].img,
+                    activo: user[0].activo,
+                    rol: user[0].rol,
+                    banType: user[0].banType,
+                    _id: user[0]._id,
+                    username: user[0].username,
+                    correo: user[0].correo,
                 }
+                resolve(userData)
             }
         } catch (e) {
             reject(e)
@@ -286,7 +281,7 @@ module.exports = {
     saveUser:saverUser,
     loginUser,
     dataUser: returnIdData,
-    dataArticle: returnDataArticle,
+    dataArticle: dataArticle,
     dataPerfil: returnPerfilData,
     changeUserName,
     getDataPerfilMaestro,

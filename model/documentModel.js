@@ -126,7 +126,7 @@ function getAllDocsUsersId(id){
             if(documentos.length <= 0){
                 resolve('nulos')
             }else{
-                resolve('documentos')
+                resolve(documentos)
             }
         } catch (e) {
             reject(e)

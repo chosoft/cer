@@ -11,7 +11,7 @@ router.get('/:maestro', async (req, res) => {
             res.redirect('/maestros')
         }else{
             const response = await controller(maestro,articleFetch)
-            const filtered = (articleFetch) ? true : false
+            const filtered = (articleFetch === 'nulo') ? false : true
             res.render('maestro',{...response,filtered})
         }
     } catch (e) {

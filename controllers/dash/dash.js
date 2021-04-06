@@ -9,6 +9,7 @@ function controller(id) {
             const arts = await getArticles()
             resolve({perfilData,arts})
         } catch (e) {
+            console.log(e)
             reject(e)
         }
     })

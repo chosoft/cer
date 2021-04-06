@@ -1,4 +1,4 @@
-const { changeVisibilityUser } = require('./../../model/articlesModel')
+const { changeVisibility } = require('./../../model/articlesModel')
 function controller(keyChange,visibility) {
     return new Promise(async(resolve, reject) => {
         try {

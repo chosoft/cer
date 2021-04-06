@@ -23,7 +23,7 @@ html(lang="es")
                 include null/cerArts.pug
             else 
                 each articulo in articulos
-                    .card-article(redirectTo=`/maestro/${articulo.usernameCreator}/${articulo._id}`)
+                    .card-article(redirectTo=`/maestro/${articulo.usernameCreator}?article=${articulo._id}`)
                         div(class=`wp-bannerCard color-${articulo.banType}`)
                         .wp-infoCard
                             .wp-img 

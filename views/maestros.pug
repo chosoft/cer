@@ -15,12 +15,12 @@ html(lang="es")
         section.banner
             .wp-content
                 h1 MAESTROS
-        section.allUsers 
+        section.allUsers
             if maestros === 'nulos'
                 include null/cerArts.pug
             else
                 each maestro in maestros 
-                    .card-maestro()
+                    .card-maestro(dataRedirect=`/maestro/${maestro.username}`)
                         .wp-imgMaestro
                             img(src=`/${maestro.img}`, alt="")
                         .wp-data 

@@ -52,7 +52,7 @@ $(document).ready(function(){
                     let content = ''
                     apiResponse.forEach(({usernameCreator,imgCreator,_id,banType,titulo})=>{
                         content += `
-                            <div class="card-article" redirectTo="/maestro/${usernameCreator}/${_id}">
+                            <div class="card-article" redirectTo="/maestro/${usernameCreator}?article=${_id}">
                                 <div class="wp-bannerCard color-${banType}"></div>
                                 <div class="wp-infoCard">
                                     <div class="wp-img">
@@ -88,6 +88,27 @@ $(document).ready(function(){
             }
         } catch (e) {
             Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de ir al articulo',icon: 'error'})
+        }
+    })
+    $('.card-maestro').click((e) => {
+        const targetRedirect = e.currentTarget.attributes[1].value
+        const verf = targetRedirect ? targetRedirect : false
+        if(verf){
+            location.href = verf
+        }else{
+            Swal.fire({title: 'Error',text:'Ha ocurrido un error a la hora de ir al articulo',icon: 'error'})
+        }
+    })  
+    $('.selectInfo').click((e) => {
+        const toDo = e.currentTarget.attributes[1].value
+
+        if(toDo === 'articulos'){
+            $('.wp-docs').css('display','none')
+            $('.wp-articulos').css('display','flex')
+
+        }else{
+            $('.wp-docs').css('display','flex')
+            $('.wp-articulos').css('display','none')
         }
     })
 })

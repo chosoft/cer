@@ -11,6 +11,7 @@ router.get('/',checker,async (req,res) => {
         const id = req.session.idUserLog 
         const controllerResponse = await dashController(id)
         const articles = controllerResponse.arts
+        console.log(controllerResponse)
         if(articles.length <= 0 ){
             res.render('dash',{perfilData: controllerResponse.perfilData,arts:'nulos',title:'Panel - Blog',id})
         }else{
@@ -20,9 +21,9 @@ router.get('/',checker,async (req,res) => {
             res.render('dash',{perfilData: controllerResponse.perfilData,arts:articles,title:'Panel - Blog',id})
         }
     } catch (e) {
-        delete e
         console.log(e)
-        res.redirect('/loguearse')
+        delete e
+        res.send('/')
     }
 })
 

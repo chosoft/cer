@@ -1,7 +1,7 @@
 //Modules
 const mongoose = require('mongoose')
-const { Schema,model } = mongoose
-const { dataArticle } = require('./usersModel')
+const { Schema,model,Types } = mongoose
+const { dataArticle } = require('./usersModel.js')
 //Schema of the model
 const articulosBlogSchema = new Schema({
     titulo: {required: true,type:String},
@@ -33,43 +33,48 @@ const MyArticle = new model('ArticuloUser',myArticlesSchema)
 
 //Functions CRUD
 function getAllArcticles(){
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         //Find all the articles
-        Articulo.find({}).sort({date:-1}).exec(function(err,articles){
-            if(err){
-                reject(err)
-            }else if(articles === null || articles.length <= 0){
-                resolve(articles)
+        try{
+
+            const articulos = await Articulo.find({visible: true})
+            if(articulos.length <= 0){
+                resolve(articulos)
             }else{
-                let allArticleData
+                
+            }
+                let allArticleData = {}
                 let allArrayData = []
-                //Search the user that create the article
-                articles.forEach(dato => {
-                    dataArticle(dato.creadorId).then(usuarioData => {
-                        //All data of the article
+                if(articulos.length <= 0){
+                    resolve(articulos)
+                }else{
+                    articulos.forEach(async (dato,index) => {
+                        const userOwnerData = await dataArticle(dato.creadorId)
                         allArticleData = {
                             _id: dato._id,
-                            parrafos: dato.parrafos,
                             titulo: dato.titulo,
                             date: dato.date,
+                            parrafos: dato.parrafos,
                             creadorId: dato.creadorId,
-                            visible: dato.visible,
-                            usernameCreator: usuarioData[0],
-                            imgCreator: usuarioData[1]
+                            usernameCreator: userOwnerData[0],
+                            visible:dato.visible,
+                            imgCreator: userOwnerData[1],
+                            banType: userOwnerData[2],
                         }
                         allArrayData.push(allArticleData)
-                        if(allArrayData.length === articles.length){
+                        if(index+1 === articulos.length){
                             resolve(allArrayData)
+
                         }else{
 
                         }
-                    }).catch(e => {
-                        console.log(e)
-                        reject(e)
+                        
                     })
-                })
-            }
-        })
+                }
+        }catch (e) {
+            console.log(e)
+            reject(e)
+        }
     })
 }
 function saveEraser(body,id){
@@ -120,6 +125,7 @@ function saveArticleUser(body){
 }
 function changeVisibility(key,visibility){
     return new Promise((resolve, reject) => {
+        console.log(key,visibility)
         Articulo.findOneAndUpdate({_id:key},{visible:visibility},(err)=>{
             if(err){
                 reject(err)
@@ -232,6 +238,7 @@ function getArticlesUser(){
                 })
             }
         } catch (e) {
+            console.log(e)
             reject(e)
         }
     })
@@ -309,23 +316,6 @@ function getArticleUserById(idArray){
                         }
                     })
                 }
-                
-/*                 if(articlesUser.length <= 0){
-   
-                }else{
-                    articlesUser.forEach(art => {
-                        finalObj = {
-                            _id: art._id,
-                            titulo: art.titulo,
-                            date: art.date,
-                            creadorId: art.creadorId,
-                            usernameCreator: userAddData[0],
-                            imgCreator: userAddData[1],
-                            banType: userAddData[2],
-                        }
-                        finalData.push(finalObj)
-                    })
-                } */
 
             })
         } catch (e) {
@@ -340,10 +330,31 @@ function getAllArticlesFrontend(){
             if(articles.length <= 0){
                 resolve('nulos')
             }else{
-                articles.sort((a,b) => {
-                    return new Date(b.date) - new Date(a.date)
+                let finalObj = {}
+                let finalArray = []
+                articles.forEach(async (article,index) => {
+                    const user = await dataArticle(article.creadorId)
+                    finalObj = {
+                        _id: article._id,
+                        titulo: article.titulo,
+                        date: article.date,
+                        parrafos: article.parrafos,
+                        creadorId: article.creadorId,
+                        usernameCreator: user[0],
+                        visible:article.visible,
+                        imgCreator: user[1],
+                        banType: user[2],
+                    }
+                    finalArray.push(finalObj)
+                    if(index+1 === articles.length){
+                        finalArray.sort((a,b) => {
+                            return new Date(b.date) - new Date(a.date)
+                        })
+                        resolve(finalArray)
+                    }else{
+
+                    }
                 })
-                resolve(articles)
             }
         } catch (e) {
             reject(e)
@@ -351,35 +362,39 @@ function getAllArticlesFrontend(){
     })
 }
 
-function getSimpleArticle(id){
+function getSimpleArticle(user,articulo){
     return new Promise(async(resolve, reject) => {
         try {
-            const articles = await MyArticle.find({creadorId:id,visible:true})
+            const filter = (articulo === 'nulo') ? {creadorId:user._id,visible:true} : {_id:Types.ObjectId(articulo),creadorId:user._id,visible:true}
+            const articles = await MyArticle.find(filter)
             if(articles.length <= 0){
-                console.log('nulE')
-
                 resolve('nulos')
             }else{
-                console.log('E')
-                resolve(articles)
+                let finalArray = []
+                let finalObj = {}
+                articles.forEach((article,index) => {
+                    finalObj =  {
+                        _id: article._id,
+                        titulo: article.titulo,
+                        date: article.date,
+                        parrafos: article.parrafos,
+                        creadorId: article.creadorId,
+                        usernameCreator: user.username,
+                        visible:article.visible,
+                        imgCreator: user.img,
+                        banType: user.banType,
+                    }
+                    finalArray.push(finalObj)
+                    if(index+1 === articles.length){
+                        resolve(finalArray)
+                    }else{
+
+                    }
+                })
             }
         } catch (e) {
             reject(e)
         } 
-    })
-}
-function getArticleById(id,articulo) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const article = await MyArticle.find({_id:articulo,visible:true,creadorId:id})
-            if(article.length <= 0){
-                resolve('nulo')
-            }else{
-                resolve(article)
-            }
-        } catch (e) {
-            reject(e)
-        }
     })
 }
 //Exports Functions
@@ -398,5 +413,4 @@ module.exports = {
     getArticlesUserParagraphs,
     getAllArticlesFrontend,
     getSimpleArticle,
-    getArticleById
 }

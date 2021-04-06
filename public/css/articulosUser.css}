@@ -448,23 +448,6 @@
   text-align: center;
 }
 
-.selectorInfo {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-.selectorInfo .selectInfo {
-  width: 10%;
-  margin: 10px;
-  border: 0;
-  background: none;
-  color: #133786;
-  font-size: 22px;
-  cursor: pointer;
-}
-
 .wp-articulos {
   width: 100%;
   height: auto;
@@ -584,63 +567,4 @@
   content: "Escrito por ";
 }
 
-.wp-docs {
-  display: none;
-  width: 100%;
-  height: auto;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 50px;
-}
-.wp-docs .card-file {
-  width: 30%;
-  height: auto;
-  margin: 20px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-}
-.wp-docs .card-file .wp-infoMan {
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  display: flex;
-  padding-right: 5px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-}
-.wp-docs .card-file .wp-imgType {
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: auto;
-}
-.wp-docs .card-file .wp-imgType img {
-  max-width: 100%;
-}
-.wp-docs .card-file .wp-download {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-}
-.wp-docs .card-file .wp-download a {
-  width: 100%;
-  padding: 15px 25px;
-  background: #FED83F;
-  color: #fff;
-  font-size: 22px;
-  text-decoration: none;
-  font-family: "Oxygen", sans-serif;
-  font-weight: bold;
-  border-radius: 12px;
-  text-align: center;
-}
-
-/*# sourceMappingURL=articulosUser.css.map */
+/*# sourceMappingURL=articulosUser.css%7D.map */

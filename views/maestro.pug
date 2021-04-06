@@ -8,27 +8,32 @@ html(lang="es")
         link(rel="shortcut icon", href="/icons/favicon.png", type="image/x-icon")
         link(href="https://fonts.googleapis.com/css2?family=Lato&family=Oxygen:wght@400;700&display=swap" rel="stylesheet") 
         link(href="/css/index.css" rel="stylesheet") 
+        link(href="/css/articulosUser.css" rel="stylesheet") 
+
     body
         include layout/header.pug
 
-        section.banner
+        section.bannerUser
             .wp-content
                 .wp-img
-                    img(src=`/${user[0].img}`)
+                    img(src=`/${user.img}`)
                 .wp-name
-                    h1= user[0].username
+                    h1= user.username
                 .wp-cargo 
-                    span= user[0].cargo
+                    span= user.cargo
         if filtered === true
-            section.wp-articulos
-                .wp-article
-                    .header
-                        h3= articuloFilter[0].titulo
+            if articulos === 'nulos'
+                h2(class="nullH") articulo nulos
+            else
+                section.wp-articulos
+                    .article
+                        .header
+                            h3= articulos[0].titulo
 
-                    each parrafo in articuloFilter[0].parrafos
-                        div(class="parrafos")
-                            - var p = parrafo
-                            div(class="parrafoArticle") !{p} 
+                        each parrafo in articulos[0].parrafos
+                            div(class="parrafos")
+                                - var p = parrafo
+                                div(class="parrafoArticle") !{p} 
 
         else
             section.selectorInfo
@@ -36,8 +41,29 @@ html(lang="es")
                 button(class="selectInfo" typeInfo="docs") Documentos
 
             section.wp-articulos
-
+                if articulos === 'nulos'
+                    h2 Articulos Nulos
+                else 
+                    each articulo in articulos
+                        .article
+                            .header
+                                h3= articulo.titulo
+                            each parrafo in articulo.parrafos 
+                                .parrafos 
+                                    - var p = parrafo
+                                    .parrafoArticle !{p}
             section.wp-docs
+                if docs === 'nulos'
+                    h1 Documentos nulos
+                else
+                    each doc in docs
+                        .card-file 
+                            .wp-infoMan 
+                                h3= doc.name
+                            .wp-imgType
+                                img(src=`/icons/uploads/${doc.type}.svg`)
+                            .wp-download
+                                a(class="btnActions download" download=doc.name href=`/${doc.ruta}`) Descargar
 
                         
         script(src="/js/axios.min.js")
