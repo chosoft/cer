@@ -11,7 +11,6 @@ router.get('/',checker,async (req,res) => {
         const id = req.session.idUserLog 
         const controllerResponse = await dashController(id)
         const articles = controllerResponse.arts
-        console.log(controllerResponse)
         if(articles.length <= 0 ){
             res.render('dash',{perfilData: controllerResponse.perfilData,arts:'nulos',title:'Panel - Blog',id})
         }else{

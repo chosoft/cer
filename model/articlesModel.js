@@ -212,7 +212,7 @@ function getArticlesUser(){
         try {
             const articlesUsers = await MyArticle.find({visible: true})
             if(articlesUsers.length <= 0){
-                reject('nulos')
+                resolve('nulos')
             }else{
                 let articleResponse = ''
                 let finalObj = {}

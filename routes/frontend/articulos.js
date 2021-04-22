@@ -12,7 +12,7 @@ router.get(('/'),async (req,res) =>{
 
         res.render('articuloscer',{articulos:controllerResponse})
     } catch (e) {
-        console.log(e)
+        console.log(e+'asd')
         const errorLog = managerError(e,arrayError)
         delete e 
         res.render('error',{msg: errorLog})
