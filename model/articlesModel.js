@@ -37,7 +37,7 @@ function getAllArcticles(){
         //Find all the articles
         try{
 
-            const articulos = await Articulo.find({visible: true})
+            const articulos = await Articulo.find()
             if(articulos.length <= 0){
                 resolve(articulos)
             }else{
