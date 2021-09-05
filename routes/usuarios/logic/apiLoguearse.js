@@ -7,7 +7,7 @@ const controller = require('./../../../controllers/usuarios/login')
 const errorManager = require('./../../../utils/errors/typeError')
 //Config to error handler
 const arrayError = ['dataNull','badLogin','notUser']
-router.post('/',(req,res,next) => {
+router.post('/',(req,res) => {
     if(req.body === undefined || req.body === '' || req.body === null || Object.keys(req.body).length <= 0){
         res.send('dataNull')
     }else{

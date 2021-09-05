@@ -48,3 +48,4 @@ const server = app.listen(config.port || process.env.PORT  , () => {
     console.log(`[SERVER] The server is listening on http://localhost:${config.port}`)
     console.log(`[SERVER] The server is running in ${config.env} enviroment`)
 })
+ 
