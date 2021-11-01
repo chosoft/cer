@@ -15,7 +15,7 @@ const Schema = Joi.object({
     passwordConf: Joi.ref('password')
     
 })
-
+ 
 function verficar(body){
     return new Promise((resolve,reject) => {
         try {            
